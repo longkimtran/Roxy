@@ -90,3 +90,4 @@ subprocess.call(r"C:\\Pictures")"""
 import random
 
 webbrowser.open(random.choice(['https://www.nimo.tv/', 'https://www.youtube.com/', 'https://www.keybr.com/']))"""
+

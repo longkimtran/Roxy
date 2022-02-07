@@ -8,6 +8,8 @@ from datetime import date, datetime
 import pyttsx3
 import speech_recognition as sr
 import wikipedia
+import requests
+from bs4 import BeautifulSoup
 
 from Data_Roxie import hello, google, end, unknown, thanks, voice1, web_data
 from Data_Roxie2 import water1, food_monday, food_friday, food_tuesday, \
@@ -94,6 +96,7 @@ def Roxie1():
                     ai_brain = str(random.choice(voice1))
 
                     subprocess.call(r'D:\playgame\Riot Games\Riot Client\RiotClientServices.exe')
+
                 else:
                     ai_brain = "Your game is not available or not installed sir!"
                     
@@ -153,6 +156,26 @@ def Roxie1():
 
             wikipedia.set_lang("en")
             ai_brain = wikipedia.summary(info, sentences=8)
+
+        elif "temperature" in me:
+            with sr.Microphone() as mic:  # Use micro in system
+                print("Roxie: What are you looking for sir? ")
+                audio = ai_hear_1.listen(mic, timeout=6,
+                                         phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+
+            print("Roxie:....")
+            try:
+                temp = ai_hear_1.recognize_google(audio)
+            except:
+                temp = "Something wrong here!"
+            print("You: " + temp)
+
+            url = f"https://www.google.com/search?q={temp}"
+            r = requests.get(url)
+            data = BeautifulSoup(r.text,"html.parser")
+            # Web Scraping Values on Google Search Results Page
+            temp2 = data.find("div", class_='BNeawe').text
+            ai_brain = "The " + temp + " is " + temp2
 
         elif "bye" in me:
             ai_brain = str(random.choice(end))

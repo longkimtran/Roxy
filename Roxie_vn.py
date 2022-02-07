@@ -9,6 +9,8 @@ import speech_recognition as sr
 import wikipedia
 from gtts import gTTS
 from playsound import playsound
+import requests
+from bs4 import BeautifulSoup
 
 from Data_Roxie import hello_vn, google_vn, end_vn, unknown_vn, \
     thanks_vn, voice_vn1, web_data
@@ -149,6 +151,26 @@ def Roxie2():
 
             wikipedia.set_lang("vi")
             ai_brain = wikipedia.summary(info, sentences=8)
+
+        elif "nhiệt độ" in me:
+            with sr.Microphone() as mic:  # Use micro in system
+                print("Roxie: Ngài muốn nhiệt độ ở đâu? ")
+                audio = ai_hear_1.listen(mic, timeout=6,
+                                         phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+
+            print("Roxie:....")
+            try:
+                temp = ai_hear_1.recognize_google(audio, language="vi-VN")
+            except:
+                temp = "Có j đó không đúng!"
+            print("You: " + temp)
+
+            url = f"https://www.google.com/search?q={temp}"
+            r = requests.get(url)
+            data = BeautifulSoup(r.text,"html.parser")
+            # Web Scraping Values on Google Search Results Page
+            temp2 = data.find("div", class_='BNeawe').text
+            ai_brain = temp + " là " + temp2
 
         elif "tạm biệt" in me:
             ai_brain = str(random.choice(end_vn))

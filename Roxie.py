@@ -70,9 +70,30 @@ def Roxie1():
             webbrowser.open('https://www.google.com.vn/')
 
         elif "entertainment" in me:
-            while True:
+            with sr.Microphone() as mic:  # Use micro in system
+                print("Roxie: How do you want to entertain? ")
+                audio = ai_hear_1.listen(mic, timeout=6,
+                                         phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+
+            print("Roxie:....")
+            try:
+                me = ai_hear_1.recognize_google(audio)
+            except:
+                me = "Something wrong here!"
+
+            print("You: " + me)
+
+            if "website" in me:
+                ai_brain = str(random.choice(voice1))
+                webbrowser.open(random.choice(web_data))
+
+            elif "music" in me:
+                subprocess.call(r'C:\Users\ASUS\AppData\Roaming\Spotify\Spotify.exe')
+                ai_brain = str(random.choice(voice1))
+
+            elif "game" in me:
                 with sr.Microphone() as mic:  # Use micro in system
-                    print("Roxie: How do you want to entertain? ")
+                    print("Roxie: What do you want game? ")
                     audio = ai_hear_1.listen(mic, timeout=6,
                                              phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
@@ -83,51 +104,23 @@ def Roxie1():
                     me = "Something wrong here!"
 
                 print("You: " + me)
-
-                if "website" in me:
+                if "Steam" in me:
                     ai_brain = str(random.choice(voice1))
-                    webbrowser.open(random.choice(web_data))
-                    break
+                    # subprocess.call() will help open fil in your pc or lap
+                    subprocess.call(r'C:\Program Files (x86)\Steam\steam.exe')
 
-                elif "music" in me:
-                    subprocess.call(r'C:\Users\ASUS\AppData\Roaming\Spotify\Spotify.exe')
+                elif "Garena" in me:
                     ai_brain = str(random.choice(voice1))
-                    break
+                    subprocess.call(r'C:\Program Files (x86)\Garena\Garena\Garena.exe')
 
-                elif "game" in me:
-                    with sr.Microphone() as mic:  # Use micro in system
-                        print("Roxie: What do you want game? ")
-                        audio = ai_hear_1.listen(mic, timeout=6,
-                                                 phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-
-                    print("Roxie:....")
-                    try:
-                        me = ai_hear_1.recognize_google(audio)
-                    except:
-                        me = "Something wrong here!"
-
-                    print("You: " + me)
-                    if "Steam" in me:
-                        ai_brain = str(random.choice(voice1))
-                        # subprocess.call() will help open fil in your pc or lap
-                        subprocess.call(r'C:\Program Files (x86)\Steam\steam.exe')
-                        break
-
-                    elif "Garena" in me:
-                        ai_brain = str(random.choice(voice1))
-                        subprocess.call(r'C:\Program Files (x86)\Garena\Garena\Garena.exe')
-                        break
-
-                    elif "Valorant" in me:
-                        ai_brain = str(random.choice(voice1))
-                        subprocess.call(r'D:\playgame\Riot Games\Riot Client\RiotClientServices.exe')
-                        break
-
-                    else:
-                        ai_brain = "Your game is not available or not installed sir!"
-
+                elif "valorant" in me:
+                    ai_brain = str(random.choice(voice1))
+                    subprocess.call(r'D:\playgame\Riot Games\Riot Client\RiotClientServices.exe')
                 else:
-                    ai_brain = "No application you want sir. Try again!"
+                    ai_brain = "Your game is not available or not installed sir!"
+
+            else:
+                ai_brain = "No application you want sir. Try again!"
 
         elif "close" in me:
             ai_brain = str(random.choice(voice1))

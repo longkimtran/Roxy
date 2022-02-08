@@ -34,7 +34,7 @@ wish()
 while True:
     with sr.Microphone() as mic:  # Use micro in system
         print("Roxie: I'm waiting !!!")
-        audio = ai_hear.listen(mic, timeout=6, phrase_time_limit=6)  # let the computer listen for exactly 3 seconds
+        audio = ai_hear.listen(mic, timeout=6, phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
     print("Roxie:....")
     try:

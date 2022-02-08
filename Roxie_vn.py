@@ -5,12 +5,12 @@ import subprocess
 import webbrowser
 from datetime import date, datetime
 
+import requests
 import speech_recognition as sr
 import wikipedia
+from bs4 import BeautifulSoup
 from gtts import gTTS
 from playsound import playsound
-import requests
-from bs4 import BeautifulSoup
 
 from Data_Roxie import hello_vn, google_vn, end_vn, unknown_vn, \
     thanks_vn, voice_vn1, web_data
@@ -70,11 +70,32 @@ def Roxie2():
             webbrowser.open('https://www.google.com.vn/')
 
         elif "giải trí" in me:
-            while True:
+            with sr.Microphone() as mic:  # Use micro in system
+                print("Roxie: Ngài muốn giải trí như thế nào? ")
+                audio = ai_hear_1.listen(mic, timeout=6,
+                                         phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+            print("Roxie:....")
+
+            try:
+                me = ai_hear_1.recognize_google(audio, language="vi-VN")
+            except:
+                me = "Có gì đó không đúng!"
+            print("You: " + me)
+
+            if "trình duyệt" in me:
+                ai_brain = str(random.choice(voice_vn1))
+                webbrowser.open(random.choice(web_data))
+
+            elif "nhạc" in me:
+                subprocess.call(r'C:\Users\ASUS\AppData\Roaming\Spotify\Spotify.exe')
+                ai_brain = str(random.choice(voice_vn1))
+
+            elif "trò chơi" in me:
                 with sr.Microphone() as mic:  # Use micro in system
-                    print("Roxie: Ngài muốn giải trí như thế nào? ")
+                    print("Roxie: Ngài muốn chơi trò chơi gì? ")
                     audio = ai_hear_1.listen(mic, timeout=6,
                                              phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+
                 print("Roxie:....")
 
                 try:
@@ -83,52 +104,25 @@ def Roxie2():
                     me = "Có gì đó không đúng!"
                 print("You: " + me)
 
-                if "trình duyệt" in me:
+                if "steam" in me:
                     ai_brain = str(random.choice(voice_vn1))
-                    webbrowser.open(random.choice(web_data))
-                    break
+                    # subprocess.call() will help open fil in your pc or lap
+                    subprocess.call(r'C:\Program Files (x86)\Steam\steam.exe')
 
-                elif "nhạc" in me:
-                    subprocess.call(r'C:\Users\ASUS\AppData\Roaming\Spotify\Spotify.exe')
+                elif "garena" in me:
                     ai_brain = str(random.choice(voice_vn1))
-                    break
+                    subprocess.call(r'C:\Program Files (x86)\Garena\Garena\Garena.exe')
 
-                elif "trò chơi" in me:
-                    with sr.Microphone() as mic:  # Use micro in system
-                        print("Roxie: Ngài muốn chơi trò chơi gì? ")
-                        audio = ai_hear_1.listen(mic, timeout=6,
-                                                 phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-
-                    print("Roxie:....")
-
-                    try:
-                        me = ai_hear_1.recognize_google(audio, language="vi-VN")
-                    except:
-                        me = "Có gì đó không đúng!"
-                    print("You: " + me)
-
-                    if "steam" in me:
-                        ai_brain = str(random.choice(voice_vn1))
-                        # subprocess.call() will help open fil in your pc or lap
-                        subprocess.call(r'C:\Program Files (x86)\Steam\steam.exe')
-                        break
-
-                    elif "garena" in me:
-                        ai_brain = str(random.choice(voice_vn1))
-                        subprocess.call(r'C:\Program Files (x86)\Garena\Garena\Garena.exe')
-                        break
-
-                    elif "valorant" in me:
-                        ai_brain = str(random.choice(voice_vn1))
-                        subprocess.call(r'D:\playgame\Riot Games\Riot Client\RiotClientServices.exe')
-                        break
-
-                    else:
-
-                        ai_brain = "Trò chơi của ngài không tồn tại hoặc chưa cài đặt!"
+                elif "valorant" in me:
+                    ai_brain = str(random.choice(voice_vn1))
+                    subprocess.call(r'D:\playgame\Riot Games\Riot Client\RiotClientServices.exe')
 
                 else:
-                    ai_brain = "Không có mục giải trí ngài cần. Hãy thử lại!"
+
+                    ai_brain = "Trò chơi của ngài không tồn tại hoặc chưa cài đặt!"
+
+            else:
+                ai_brain = "Không có mục giải trí ngài cần. Hãy thử lại!"
 
         elif "đóng" in me:
             ai_brain = str(random.choice(voice_vn1))

@@ -45,58 +45,90 @@ def Roxie2():
             now = datetime.now()
             ai_brain = now.strftime("%H:%M:%S")
 
-        elif "Google" in me:
-            ai_brain = str(random.choice(google_vn))
-            webbrowser.open('https://www.google.com.vn/')
-
-        elif "giải trí" in me:
+        elif "nhiệt độ" in me:
             with sr.Microphone() as mic:  # Use micro in system
-                print("Roxie: Ngài muốn giải trí như thế nào? ")
+                print("Roxie: Ngài muốn nhiệt độ ở đâu? ")
                 audio = ai_hear_1.listen(mic, timeout=6,
                                          phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
             print("Roxie:....")
             try:
-                me = ai_hear_1.recognize_google(audio, language="vi-VN")
+                temp = ai_hear_1.recognize_google(audio, language="vi-VN")
             except:
-                me = "Có gì đó không đúng ở đây. Ngài nên thử lại!"
-            print("You: " + me)
+                temp = "Có j đó không đúng!"
+            print("You: " + temp)
 
-            if "trình duyệt" in me:
-                ai_brain = str(random.choice(voice_vn1))
-                webbrowser.open(random.choice(web_data))
+            url = f"https://www.google.com/search?q={temp}"
+            r = requests.get(url)
+            data = BeautifulSoup(r.text,"html.parser")
+            # Web Scraping Values on Google Search Results
+            temp2 = data.find("div", class_='BNeawe').text
+            ai_brain = temp + " là " + temp2
 
-            elif "âm nhạc" in me:
-                subprocess.call(r'C:\Users\ASUS\AppData\Roaming\Spotify\Spotify.exe')
+        elif "Google" in me:
+            ai_brain = str(random.choice(google_vn))
+            webbrowser.open('https://www.google.com.vn/')
 
-            elif "game" or "trò chơi" in me:
+        elif "giải trí" in me:
+            while True:
                 with sr.Microphone() as mic:  # Use micro in system
-                    print("Roxie: Ngài muốn chơi game gì?")
+                    print("Roxie: Ngài muốn giải trí như thế nào? ")
                     audio = ai_hear_1.listen(mic, timeout=6,
                                              phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-
                 print("Roxie:....")
+
                 try:
                     me = ai_hear_1.recognize_google(audio, language="vi-VN")
                 except:
                     me = "Có gì đó không đúng!"
-
                 print("You: " + me)
-                if "steam" in me:
-                    ai_brain = str(random.choice(voice_vn1))
-                    subprocess.call(r'C:\Program Files (x86)\Steam\steam.exe')
 
-                elif "garena" in me:
+                if "trình duyệt" in me:
                     ai_brain = str(random.choice(voice_vn1))
-                    subprocess.call(r'C:\Program Files (x86)\Garena\Garena\Garena.exe')
+                    webbrowser.open(random.choice(web_data))
+                    break
 
-                elif "valorant" in me:
+                elif "nhạc" in me:
+                    subprocess.call(r'C:\Users\ASUS\AppData\Roaming\Spotify\Spotify.exe')
                     ai_brain = str(random.choice(voice_vn1))
-                    subprocess.call(r'D:\playgame\Riot Games\Riot Client\RiotClientServices.exe')
+                    break
+
+                elif "trò chơi" in me:
+                    with sr.Microphone() as mic:  # Use micro in system
+                        print("Roxie: Ngài muốn chơi trò chơi gì? ")
+                        audio = ai_hear_1.listen(mic, timeout=6,
+                                                 phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+
+                    print("Roxie:....")
+
+                    try:
+                        me = ai_hear_1.recognize_google(audio, language="vi-VN")
+                    except:
+                        me = "Có gì đó không đúng!"
+                    print("You: " + me)
+
+                    if "steam" in me:
+                        ai_brain = str(random.choice(voice_vn1))
+                        # subprocess.call() will help open fil in your pc or lap
+                        subprocess.call(r'C:\Program Files (x86)\Steam\steam.exe')
+                        break
+
+                    elif "garena" in me:
+                        ai_brain = str(random.choice(voice_vn1))
+                        subprocess.call(r'C:\Program Files (x86)\Garena\Garena\Garena.exe')
+                        break
+
+                    elif "valorant" in me:
+                        ai_brain = str(random.choice(voice_vn1))
+                        subprocess.call(r'D:\playgame\Riot Games\Riot Client\RiotClientServices.exe')
+                        break
+
+                    else:
+
+                        ai_brain = "Trò chơi của ngài không tồn tại hoặc chưa cài đặt!"
+
                 else:
-                    ai_brain = "Trò chơi của ngài không tồn tại hoặc chưa cài đặt!"
-            else:
-                ai_brain = "Không có ứng dụng giải trí ngài cần. Xin hãy thử lại!"
+                    ai_brain = "Không có mục giải trí ngài cần. Hãy thử lại!"
 
         elif "đóng" in me:
             ai_brain = str(random.choice(voice_vn1))
@@ -151,26 +183,6 @@ def Roxie2():
 
             wikipedia.set_lang("vi")
             ai_brain = wikipedia.summary(info, sentences=8)
-
-        elif "nhiệt độ" in me:
-            with sr.Microphone() as mic:  # Use micro in system
-                print("Roxie: Ngài muốn nhiệt độ ở đâu? ")
-                audio = ai_hear_1.listen(mic, timeout=6,
-                                         phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-
-            print("Roxie:....")
-            try:
-                temp = ai_hear_1.recognize_google(audio, language="vi-VN")
-            except:
-                temp = "Có j đó không đúng!"
-            print("You: " + temp)
-
-            url = f"https://www.google.com/search?q={temp}"
-            r = requests.get(url)
-            data = BeautifulSoup(r.text,"html.parser")
-            # Web Scraping Values on Google Search Results Page
-            temp2 = data.find("div", class_='BNeawe').text
-            ai_brain = temp + " là " + temp2
 
         elif "tạm biệt" in me:
             ai_brain = str(random.choice(end_vn))

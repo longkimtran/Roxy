@@ -1,6 +1,9 @@
 # Some libraries use in AV
-import speech_recognition as sr
+import datetime
+
 import pyttsx3
+import speech_recognition as sr
+
 from Roxie import Roxie1  # get function Roxie1 from Roxie.py
 from Roxie_vn import Roxie2  # get function Roxie1 from Roxie_vn.py
 
@@ -9,10 +12,29 @@ ai_hear_1 = sr.Recognizer()
 ai_mouth = pyttsx3.init()
 ai_brain = ""
 
+
+def wish():
+    hour = int(datetime.datetime.now().hour)
+    if 8 <= hour <= 12:
+        ai_brain2 = "Good morning sir. I'm Roxy your virtual assistance. Please choose your language for you, sir!"
+    elif 12 < hour < 18:
+        ai_brain2 = "Good afternoon sir. I'm Roxy your virtual assistance. Please choose your language for you, sir!"
+    else:
+        ai_brain2 = "Good evening sir. I'm Roxy your virtual assistance. Please choose your language for you, sir!"
+
+    print("Roxie: " + ai_brain2)
+    voice = ai_mouth.getProperty('voices')
+    ai_mouth.setProperty('voice', voice[1].id)  # voice AI: 0(Male), 1(Female)
+    ai_mouth.say(ai_brain2)
+    ai_mouth.runAndWait()
+
+
+wish()
+
 while True:
     with sr.Microphone() as mic:  # Use micro in system
-        print("Roxie: Which languages you choose!")
-        audio = ai_hear.listen(mic, timeout=6, phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+        print("Roxie: I'm waiting !!!")
+        audio = ai_hear.listen(mic, timeout=6, phrase_time_limit=6)  # let the computer listen for exactly 3 seconds
 
     print("Roxie:....")
     try:
@@ -35,3 +57,5 @@ while True:
     ai_mouth.setProperty('voice', voices[1].id)  # voice AI: 0(Male), 1(Female)
     ai_mouth.say(ai_brain)
     ai_mouth.runAndWait()
+
+

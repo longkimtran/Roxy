@@ -22,6 +22,7 @@ while True:
 vid.release()
 # Destroy all the windows
 cv2.destroyAllWindows()"""
+from pyglet import window
 
 """import wikipedia
 
@@ -91,7 +92,7 @@ import random
 
 webbrowser.open(random.choice(['https://www.nimo.tv/', 'https://www.youtube.com/', 'https://www.keybr.com/']))"""
 
-import pyglet
+"""import pyglet
 
 # pick an animated gif file you have in the working directory
 ag_file = "Personal Voice Assistant.gif"
@@ -99,12 +100,8 @@ animation = pyglet.resource.animation(ag_file)
 sprite = pyglet.sprite.Sprite(animation)
 
 # create a window and set it to the image size
-win = pyglet.window.Window(width=sprite.width, height=sprite.height)
+win = pyglet.window.Window(width=sprite.width, height=sprite.height, caption="Roxy")
 
-# set window background color = r, g, b, alpha
-# each value goes from 0.0 to 1.0
-green = 0, 1, 0, 1
-pyglet.gl.glClearColor(*green)
 
 @win.event
 def on_draw():
@@ -112,3 +109,75 @@ def on_draw():
     sprite.draw()
 
 pyglet.app.run()
+"""
+"""from tkinter import *
+from Main_Roxie import AI
+win = Tk()
+button1 = Button(win, text="Start", command=AI)
+button1.pack()
+win.mainloop()"""
+
+"""from tkinter import *
+from Main_Roxie import AI
+
+root = Tk()
+root.title('Roxy')
+button_start = Button(root, text="Start", command=AI, width=30, height=10)
+button_start.pack()
+
+root.mainloop()"""
+
+import speech_recognition as sr
+import pyttsx3
+import string
+import random
+#Text To Speech
+engine = pyttsx3.init('sapi5')
+voices = engine.getProperty('voices')
+#print(voices)
+engine.setProperty('voice',voices[0].id)
+engine.setProperty('rate', 145) #you can replace it to incease or decrease dound speed default(200)
+def speak(audio):  #here audio is var which contain text
+    engine.say(audio)
+    engine.runAndWait()
+#now convert audio to text
+def takecom():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listning....")
+        audio = r.listen(source)
+    try:
+        print("Recognising....")
+        text = r.recognize_google(audio,language='en-in')
+        print(text)
+    except Exception:
+        speak("error...")
+        print("Network connection error")
+        return "none"
+    return text
+#for main function
+if __name__ == "__main__":
+    while True:
+        query = takecom().lower()
+        if 'create password' in query or 'c' in query :
+            if __name__ == "__main__":
+                s1 = string.ascii_lowercase
+                s2 = string.ascii_uppercase
+                s3 = string.digits
+                s4 = string.punctuation
+                speak('what do you want to keep the length of the password type here')
+                plen =int(input('what is the length of the password'))  #p
+                s=[]
+                s.extend(list(s1))
+                s.extend(list(s2))
+                s.extend(list(s3))
+                s.extend(list(s4))
+                print("Your password is:")
+                print("".join(random.sample(s,plen)))
+                speak("".join(random.sample(s,plen)))
+        elif query == 'none':
+            continue
+        elif 'exit' in query or 'abort' in query or 'stop' in query or 'bye' in query or 'quit' in query:
+            ex_exit = 'ok byy'
+            speak(ex_exit)
+            exit()

@@ -1,19 +1,21 @@
 # Some libraries use in AV
 import datetime
-from threading import Thread
 
 import pyttsx3
 import speech_recognition as sr
+from multiprocessing import Process
+import warnings
+
 
 from Roxie import Roxie1  # get function Roxie1 from Roxie.py
 from Roxie_vn import Roxie2  # get function Roxie1 from Roxie_vn.py
-from Roxy_Interface import GifRoxy
+'''from Roxy_Interface import GifRoxy'''
 
 ai_hear = sr.Recognizer()
 ai_hear_1 = sr.Recognizer()
 ai_mouth = pyttsx3.init()
 ai_brain = ""
-
+warnings.filterwarnings("ignore")
 
 def wish():
     hour = int(datetime.datetime.now().hour)
@@ -29,7 +31,6 @@ def wish():
     ai_mouth.setProperty('voice', voice[1].id)  # voice AI: 0(Male), 1(Female)
     ai_mouth.say(ai_brain2)
     ai_mouth.runAndWait()
-
 
 wish()
 

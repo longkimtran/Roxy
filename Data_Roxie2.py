@@ -99,4 +99,4 @@ food_sunday = """you should eat according to this regimen, sir:
 This all of today, sir!"""
 
 # acclivity database
-activity1 = ['go to gym to exercise', 'play basketball', 'go to swimming', '']
+activity1 = ['go to gym to exercise', 'play basketball', 'go to swimming']

@@ -55,7 +55,7 @@ def Roxie2():
             try:
                 temp = ai_hear_1.recognize_google(audio, language="vi-VN")
             except:
-                temp = "Có j đó không đúng!"
+                temp = "Có gì đó không đúng!"
             print("You: " + temp)
 
             url = f"https://www.google.com/search?q={temp}"
@@ -109,7 +109,7 @@ def Roxie2():
                     # subprocess.call() will help open fil in your pc or lap
                     subprocess.call(r'C:\Program Files (x86)\Steam\steam.exe')
 
-                elif "garena" in me:
+                elif "Garena" in me:
                     ai_brain = str(random.choice(voice_vn1))
                     subprocess.call(r'C:\Program Files (x86)\Garena\Garena\Garena.exe')
 
@@ -159,6 +159,26 @@ def Roxie2():
                     ai_brain = str(food_saturday_vn)
                 elif curr_date == "Sunday":
                     ai_brain = str(food_sunday_vn)
+
+            elif "cân nặng" in me:
+                print("Xin ngài hãy nhập cân nặng và chiều cao!")
+                weight = float(input("Cân nặng(kg):  "))
+                height = float(input("Chiều Cao(meter): "))
+
+                print("Roxy: Đang tính toán...!")
+
+                bmi = weight / (height ** 2)
+
+                if bmi <= 18.5:
+                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài đang suy dinh dưỡng đấy!"
+                elif bmi > 18.5 or bmi <= 24.9:
+                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Cơ thể ngài bình thường."
+                elif bmi > 25 or bmi <= 34.9:
+                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài hơi thừa cân đấy"
+                elif bmi > 35:
+                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài bị béo phì rồi nên giảm cân " \
+                                                                                 "thôi! "
+
             else:
                 ai_brain = "Ngài nên theo chỉ dẫn của thực đơn này để giữ cho sức khỏe được khỏe mạnh!"
 

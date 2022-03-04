@@ -65,7 +65,7 @@ def Roxie1():
             temp2 = data.find("div", class_='BNeawe').text
             ai_brain = "The " + temp + " is " + temp2
 
-        elif "google" in me:
+        elif "Google" in me:
             ai_brain = str(random.choice(google))
             webbrowser.open('https://www.google.com.vn/')
 
@@ -157,8 +157,27 @@ def Roxie1():
                     ai_brain = "Today is " + curr_date + ", " + str(food_saturday)
                 elif curr_date == "Sunday":
                     ai_brain = "Today is " + curr_date + ", " + str(food_sunday)
-                else:
-                    ai_brain = "You should follow the instructions of this menu to stay healthy, sir!"
+
+            elif "body" in me:
+                print("Please enter your weight and height, sir!")
+                weight = float(input("Enter your weight(kg):  "))
+                height = float(input("Enter your height(meter): "))
+
+                print("Roxy: Calculating...!")
+
+                bmi = weight / (height ** 2)
+
+                if bmi <= 18.5:
+                    ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You underweight, sir!"
+                elif bmi > 18.5 or bmi <= 24.9:
+                    ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You normal, sir!"
+                elif bmi > 25 or bmi <= 34.9:
+                    ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You overweight, sir!"
+                elif bmi > 35:
+                    ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You obese, sir!"
+
+            else:
+                ai_brain = "You should follow the instructions of this menu to stay healthy, sir!"
 
         elif "searching" in me:
             with sr.Microphone() as mic:  # Use micro in system

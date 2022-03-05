@@ -127,7 +127,7 @@ button_start.pack()
 
 root.mainloop()"""
 
-import speech_recognition as sr
+"""import speech_recognition as sr
 import pyttsx3
 import string
 import random
@@ -166,7 +166,7 @@ if __name__ == "__main__":
                 s3 = string.digits
                 s4 = string.punctuation
                 speak('what do you want to keep the length of the password type here')
-                plen =int(input('what is the length of the password'))  #p
+                plen =int(takecom())  #p
                 s=[]
                 s.extend(list(s1))
                 s.extend(list(s2))
@@ -180,4 +180,27 @@ if __name__ == "__main__":
         elif 'exit' in query or 'abort' in query or 'stop' in query or 'bye' in query or 'quit' in query:
             ex_exit = 'ok byy'
             speak(ex_exit)
-            exit()
+            exit()"""
+
+print("Please enter your weight and height, sir!")
+weight = float(input("Enter your weight(kg):  "))
+height = float(input("Enter your height(meter): "))
+bmi = 0
+print("Roxy: Calculating...!")
+
+bmi = weight / (height ** 2)
+
+if bmi <= 18.5:
+    print(str((round(bmi, 2))) +" You underweight, sir! ")
+
+elif 18.5 < bmi <= 24.9:
+    print(str((round(bmi, 2))) + " You normal, sir!")
+
+elif 25.1 <= bmi < 34.9:
+    print(str((round(bmi, 2))) + " You overweight, sir! ")
+
+elif bmi >= 35.1:
+    print(str((round(bmi, 2))) +" You obese, sir! ")
+
+else:
+    ai_brain = "Some thing wrong sir. Try again!"

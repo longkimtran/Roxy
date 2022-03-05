@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup
 
 from Data_Roxie import hello, google, end, unknown, thanks, voice1, web_data
 from Data_Roxie2 import water1, food_monday, food_friday, food_tuesday, \
-    food_sunday, food_saturday, food_thursday, food_wednesday
+    food_sunday, food_saturday, food_thursday, food_wednesday, wei1, wei2, wei3, activity1
 
 
 def Roxie1():
@@ -104,16 +104,16 @@ def Roxie1():
                     me = "Something wrong here!"
 
                 print("You: " + me)
-                if "Steam" in me:
+                if "Steam" in me or "steam" in me:
                     ai_brain = str(random.choice(voice1))
                     # subprocess.call() will help open fil in your pc or lap
                     subprocess.call(r'C:\Program Files (x86)\Steam\steam.exe')
 
-                elif "Garena" in me:
+                elif "Garena" in me or "garena" in me:
                     ai_brain = str(random.choice(voice1))
                     subprocess.call(r'C:\Program Files (x86)\Garena\Garena\Garena.exe')
 
-                elif "valorant" in me:
+                elif "Valorant" in me or "valorant" in me:
                     ai_brain = str(random.choice(voice1))
                     subprocess.call(r'D:\playgame\Riot Games\Riot Client\RiotClientServices.exe')
                 else:
@@ -122,7 +122,7 @@ def Roxie1():
             else:
                 ai_brain = "No application you want sir. Try again!"
 
-        elif "close" in me:
+        elif "close" in me or "turn off" in me:
             ai_brain = str(random.choice(voice1))
             os.system("taskkill /im chrome.exe /f")
 
@@ -141,7 +141,7 @@ def Roxie1():
 
             if "water" in me:
                 ai_brain = str(water1)
-            elif "eat" in me:
+            elif "eat" in me or "food" in me:
                 curr_date = datetime.today().strftime('%A')
                 if curr_date == "Monday":
                     ai_brain = "Today is " + curr_date + ", " + str(food_monday)
@@ -158,7 +158,7 @@ def Roxie1():
                 elif curr_date == "Sunday":
                     ai_brain = "Today is " + curr_date + ", " + str(food_sunday)
 
-            elif "body" in me:
+            elif "BMI" in me or "weight" in me:
                 print("Please enter your weight and height, sir!")
                 weight = float(input("Enter your weight(kg):  "))
                 height = float(input("Enter your height(meter): "))
@@ -168,18 +168,23 @@ def Roxie1():
                 bmi = weight / (height ** 2)
 
                 if bmi <= 18.5:
-                    ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You underweight, sir!"
-                elif bmi > 18.5 or bmi <= 24.9:
-                    ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You normal, sir!"
-                elif bmi > 25 or bmi <= 34.9:
-                    ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You overweight, sir!"
-                elif bmi > 35:
-                    ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You obese, sir!"
+                    ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You underweight, sir! " + str(wei1)
+
+                elif 18.5 < bmi < 24.9:
+                    ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". " + str(wei2)
+
+                elif 25 <= bmi < 34.9:
+                    ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You overweight, sir! " + str(wei3) + \
+                               str(random.choice(activity1))
+
+                elif bmi >= 35:
+                    ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You obese, sir! " + str(wei3) + \
+                               str(random.choice(activity1))
 
             else:
                 ai_brain = "You should follow the instructions of this menu to stay healthy, sir!"
 
-        elif "searching" in me:
+        elif "searching" in me or "information" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 print("Roxie: What are you looking for sir? ")
                 audio = ai_hear_1.listen(mic, timeout=6,
@@ -195,7 +200,7 @@ def Roxie1():
             wikipedia.set_lang("en")
             ai_brain = wikipedia.summary(info, sentences=8)
 
-        elif "bye" in me:
+        elif "bye" in me or "see" in me:
             ai_brain = str(random.choice(end))
 
             print("Roxie: " + ai_brain)
@@ -205,7 +210,7 @@ def Roxie1():
             ai_mouth.runAndWait()
             break
 
-        elif "thank" in me:
+        elif "thank" in me or "thanks" in me:
             ai_brain = str(random.choice(thanks))
 
         else:
@@ -213,6 +218,7 @@ def Roxie1():
                 ai_brain = "I'm fine thanks! So what do you want me do Sir?"
             else:
                 ai_brain = str(random.choice(unknown))
+
         print("Roxie: " + ai_brain)
         voices = ai_mouth.getProperty('voices')
         ai_mouth.setProperty('voice', voices[1].id)  # voice AI: 0(Male), 1(Female)

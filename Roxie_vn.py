@@ -15,7 +15,7 @@ from playsound import playsound
 from Data_Roxie import hello_vn, google_vn, end_vn, unknown_vn, \
     thanks_vn, voice_vn1, web_data
 from Data_Roxie3 import water2, food_friday_vn, food_monday_vn, food_saturday_vn, \
-    food_sunday_vn, food_thursday_vn, food_tuesday_vn, food_wednesday_vn
+    food_sunday_vn, food_thursday_vn, food_tuesday_vn, food_wednesday_vn, activity2, wei1_vn, wei2_vn, wei3_vn
 
 
 def Roxie2():
@@ -60,7 +60,7 @@ def Roxie2():
 
             url = f"https://www.google.com/search?q={temp}"
             r = requests.get(url)
-            data = BeautifulSoup(r.text,"html.parser")
+            data = BeautifulSoup(r.text, "html.parser")
             # Web Scraping Values on Google Search Results
             temp2 = data.find("div", class_='BNeawe').text
             ai_brain = temp + " là " + temp2
@@ -104,21 +104,20 @@ def Roxie2():
                     me = "Có gì đó không đúng!"
                 print("You: " + me)
 
-                if "steam" in me:
+                if "steam" in me or "Steam" in me:
                     ai_brain = str(random.choice(voice_vn1))
                     # subprocess.call() will help open fil in your pc or lap
                     subprocess.call(r'C:\Program Files (x86)\Steam\steam.exe')
 
-                elif "Garena" in me:
+                elif "Garena" in me or "garena" in me:
                     ai_brain = str(random.choice(voice_vn1))
                     subprocess.call(r'C:\Program Files (x86)\Garena\Garena\Garena.exe')
 
-                elif "valorant" in me:
+                elif "valorant" in me or "Valorant" in me:
                     ai_brain = str(random.choice(voice_vn1))
                     subprocess.call(r'D:\playgame\Riot Games\Riot Client\RiotClientServices.exe')
 
                 else:
-
                     ai_brain = "Trò chơi của ngài không tồn tại hoặc chưa cài đặt!"
 
             else:
@@ -170,19 +169,25 @@ def Roxie2():
                 bmi = weight / (height ** 2)
 
                 if bmi <= 18.5:
-                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài đang suy dinh dưỡng đấy!"
-                elif bmi > 18.5 or bmi <= 24.9:
-                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Cơ thể ngài bình thường."
-                elif bmi > 25 or bmi <= 34.9:
-                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài hơi thừa cân đấy"
+                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài đang suy dinh dưỡng đấy! " + \
+                               str(wei1_vn)
+
+                elif 18.5 < bmi <= 24.9:
+                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". " + str(wei2_vn)
+
+                elif 25 < bmi <= 34.9:
+                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài hơi thừa cân đấy! " + \
+                               str(wei3_vn) + str(random.choice(activity2))
+
                 elif bmi > 35:
                     ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài bị béo phì rồi nên giảm cân " \
-                                                                                 "thôi! "
+                                                                                "thôi! " + str(wei3_vn) + \
+                               str(random.choice(activity2))
 
             else:
                 ai_brain = "Ngài nên theo chỉ dẫn của thực đơn này để giữ cho sức khỏe được khỏe mạnh!"
 
-        elif "tìm kiếm" in me:
+        elif "tìm kiếm" in me or "thông tin" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 print("Roxie: Bạn muốn tìm gì à? ")
                 audio = ai_hear_1.listen(mic, timeout=6,
@@ -198,7 +203,10 @@ def Roxie2():
             wikipedia.set_lang("vi")
             ai_brain = wikipedia.summary(info, sentences=8)
 
-        elif "tạm biệt" in me:
+        elif "cảm ơn" in me or "Cảm ơn" in me:
+            ai_brain = str(random.choice(thanks_vn))
+
+        elif "tạm biệt" in me or "Tạm biệt" in me:
             ai_brain = str(random.choice(end_vn))
 
             print("Roxie: " + ai_brain)
@@ -206,6 +214,7 @@ def Roxie2():
             tts.save("hi.mp3")
             playsound("hi.mp3")
             break
+
         else:
             if "thế nào" in me:
                 ai_brain = "Tôi khỏe, ngài cần tôi làm gì nào?"

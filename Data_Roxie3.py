@@ -99,3 +99,15 @@ Và đó là thực đơn cho ngày hôm nay thưa ngài!"""
 
 # activity database
 
+activity2 = ['Tập gym để giảm cân', 'chơi bóng rổ', 'đi bơi', 'đá banh']
+
+# weight database
+wei1_vn = "Theo các nghiên cứu, những người gầy muốn tăng cân nên tiêu thụ thêm 500 calo mỗi ngày, tổng cộng là "\
+           "2500-3000 calo. Vì vậy, trong 15 phút đầu tiên của bữa ăn, bạn nên ăn nhanh, bạn ạ. "\
+           "Đây là lúc anh ta tiêu thụ nhiều thức ăn nhất. Bạn có thể tìm thấy menu ở mục đồ ăn, thưa bạn!"
+
+wei2_vn = "Theo chỉ số BMI, cơ thể của ngài là hoàn toàn điển hình. Để duy trì cơ thể khỏe mạnh,ngài cần tuân thủ " \
+          "thực đơn hàng ngày. "
+
+wei3_vn = "Ngài nên áp dụng các suất ăn bao gồm trong danh mục thực phẩm, thưa ngài. Ngài cũng nên bổ sung các phương " \
+          "pháp giảm cân như "

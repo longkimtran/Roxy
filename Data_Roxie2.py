@@ -98,5 +98,17 @@ food_sunday = """you should eat according to this regimen, sir:
               One cup of brown rice (if you like sir),
 This all of today, sir!"""
 
-# acclivity database
-activity1 = ['go to gym to exercise', 'play basketball', 'go to swimming']
+# activity database
+activity1 = ['go to gym to exercise', 'play basketball', 'go to swimming', 'play football']
+
+
+# weight database
+wei1 = "According to studies, skinny persons who desire to acquire weight should consume 500 extra calories every "\
+        "day, for a total of 2500-3000 calories. As a result, during the first 15 minutes of the meal, you should eat "\
+        "swiftly, sir. This is when he consumes the most food. You can find the menu on the food section, sir!"
+
+wei2 = "According to BMI norms, your body is entirely typical. To maintain your body healthy, sir, "\
+        "you need stick to the daily menu of food items."
+
+wei3 = "You should apply the meals included in the food category, sir. You should also add training methods like "
+

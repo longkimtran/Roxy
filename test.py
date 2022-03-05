@@ -182,7 +182,7 @@ if __name__ == "__main__":
             speak(ex_exit)
             exit()"""
 
-print("Please enter your weight and height, sir!")
+"""print("Please enter your weight and height, sir!")
 weight = float(input("Enter your weight(kg):  "))
 height = float(input("Enter your height(meter): "))
 bmi = 0
@@ -203,4 +203,4 @@ elif bmi >= 35.1:
     print(str((round(bmi, 2))) +" You obese, sir! ")
 
 else:
-    ai_brain = "Some thing wrong sir. Try again!"
+    ai_brain = "Some thing wrong sir. Try again!"""

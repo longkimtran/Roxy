@@ -22,6 +22,9 @@ library in there first if not install them like this:
 All function I analyze in the report. You can read how that function work in app.
 If you like contact me to develop this app better and better.
 
+I create 1 EXE file in 'dist folder' so you can open and use it if you don't 
+want to open Software Programming.
+
 + Mail: LongTHKGCS18852@fpt.edu.vn or tranhuukimlong@gmail.com
 + Phone: 0917515853
 + Face: facebook.com/longtran.210620

@@ -10,8 +10,9 @@ import requests
 import speech_recognition as sr
 import wikipedia
 from bs4 import BeautifulSoup
+import pyautogui
 
-from Data_Roxie import hello, google, end, unknown, thanks, voice1, web_data
+from Data_Roxie import hello, google, end, unknown, thanks, voice1, web_data, intro
 from Data_Roxie2 import water1, food_monday, food_friday, food_tuesday, \
     food_sunday, food_saturday, food_thursday, food_wednesday, wei1, wei2, wei3, activity1
 
@@ -37,6 +38,9 @@ def Roxie1():
         if "hello" in me:
             ai_brain = str(random.choice(hello))
 
+        elif "who" in me or "introduce" in me:
+            ai_brain = str(intro)
+
         elif "day" in me:
             today = date.today()  # use current date real life
             ai_brain = today.strftime("%B %d, %Y")
@@ -44,6 +48,18 @@ def Roxie1():
         elif "time" in me:
             now = datetime.now()
             ai_brain = now.strftime("%H:%M:%S")
+
+        elif "volume up" in me:
+            pyautogui.press("volumeup")  # volume up in system
+            ai_brain = "Ok, volume up!"
+
+        elif "volume down" in me:
+            pyautogui.press("volumedown")  # volume down in system
+            ai_brain = "Ok, volume down!"
+
+        elif "volume mute" in me or "mute" in me:
+            pyautogui.press("volumemute")  # mute volume in system
+            ai_brain = "Ok, mute volume !"
 
         elif "temperature" in me:
             with sr.Microphone() as mic:  # Use micro in system

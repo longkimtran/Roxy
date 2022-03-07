@@ -109,5 +109,5 @@ wei1_vn = "Theo các nghiên cứu, những người gầy muốn tăng cân nê
 wei2_vn = "Theo chỉ số BMI, cơ thể của ngài là hoàn toàn điển hình. Để duy trì cơ thể khỏe mạnh,ngài cần tuân thủ " \
           "thực đơn hàng ngày. "
 
-wei3_vn = "Ngài nên áp dụng các suất ăn bao gồm trong danh mục thực phẩm, thưa ngài. Ngài cũng nên bổ sung các phương " \
+wei3_vn = "Ngài nên áp dụng các suất ăn bao gồm trong danh mục thực phẩm, thưa ngài. Ngài cũng nên bổ sung các phương "\
           "pháp giảm cân như "

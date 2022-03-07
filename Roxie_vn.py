@@ -11,9 +11,10 @@ import wikipedia
 from bs4 import BeautifulSoup
 from gtts import gTTS
 from playsound import playsound
+import pyautogui
 
 from Data_Roxie import hello_vn, google_vn, end_vn, unknown_vn, \
-    thanks_vn, voice_vn1, web_data
+    thanks_vn, voice_vn1, web_data, intro_vn
 from Data_Roxie3 import water2, food_friday_vn, food_monday_vn, food_saturday_vn, \
     food_sunday_vn, food_thursday_vn, food_tuesday_vn, food_wednesday_vn, activity2, wei1_vn, wei2_vn, wei3_vn
 
@@ -37,6 +38,9 @@ def Roxie2():
         if "Xin chào" in me:
             ai_brain = str(random.choice(hello_vn))
 
+        elif "giới thiệu"in me or "ai" in me:
+            ai_brain = str(intro_vn)
+
         elif "ngày" in me:
             today = date.today()  # use current date real life
             ai_brain = today.strftime("%d/%m/%Y")
@@ -44,6 +48,18 @@ def Roxie2():
         elif "giờ" in me:
             now = datetime.now()
             ai_brain = now.strftime("%H:%M:%S")
+
+        elif "tăng âm lương" in me:
+            pyautogui.press("volumeup")  # volume up in system
+            ai_brain = "Đã tăng âm lượng!"
+
+        elif "giảm âm lượng" in me:
+            pyautogui.press("volumedown")  # volume down in system
+            ai_brain = "Đã giảm âm lượng!"
+
+        elif "tắt tiếng" in me or "mute" in me:
+            pyautogui.press("volumemute")  # mute volume in system
+            ai_brain = "Tắt tiếng!"
 
         elif "nhiệt độ" in me:
             with sr.Microphone() as mic:  # Use micro in system

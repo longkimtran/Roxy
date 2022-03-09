@@ -5,12 +5,13 @@ import subprocess
 import webbrowser
 from datetime import date, datetime
 
+import pyautogui
 import pyttsx3
 import requests
 import speech_recognition as sr
 import wikipedia
 from bs4 import BeautifulSoup
-import pyautogui
+import screen_brightness_control as sbc
 
 from Data_Roxie import hello, google, end, unknown, thanks, voice1, web_data, intro
 from Data_Roxie2 import water1, food_monday, food_friday, food_tuesday, \
@@ -35,20 +36,25 @@ def Roxie1():
 
         print("You: " + me)
 
+# SAY HELLO:
         if "hello" in me:
             ai_brain = str(random.choice(hello))
 
+# INTRODUCTION OF ROXY:
         elif "who" in me or "introduce" in me:
             ai_brain = str(intro)
 
+# DAY IN CURRENT:
         elif "day" in me:
             today = date.today()  # use current date real life
             ai_brain = today.strftime("%B %d, %Y")
 
+# TIME IN CURRENT:
         elif "time" in me:
             now = datetime.now()
             ai_brain = now.strftime("%H:%M:%S")
 
+# ALTER VOLUME UP-DOWN-MUTE:
         elif "volume up" in me:
             pyautogui.press("volumeup")  # volume up in system
             ai_brain = "Ok, volume up!"
@@ -61,6 +67,38 @@ def Roxie1():
             pyautogui.press("volumemute")  # mute volume in system
             ai_brain = "Ok, mute volume !"
 
+# ALTER BRIGHTNESS ON SCREEN:
+        elif "brightness up" in me:
+            with sr.Microphone() as mic:  # Use micro in system
+                print("Roxie: How much brightness increase is appropriate, sir? ")
+                audio = ai_hear.listen(mic, timeout=6,
+                                       phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+
+            print("Roxie:....")
+            try:
+               me = ai_hear.recognize_google(audio)
+            except:
+                me = "Something wrong here!"
+            sbc.set_brightness(me, display=0)  # set brightness up in system
+            ai_brain = "Ok, brightness up in " + str(me) + "% !"
+
+        elif "brightness down" in me:
+            with sr.Microphone() as mic:  # Use micro in system
+                print("Roxie: How much brightness reduction is appropriate, sir? ")
+                audio = ai_hear.listen(mic, timeout=6,
+                                       phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+
+            print("Roxie:....")
+            try:
+               me = ai_hear.recognize_google(audio)
+            except:
+                me = "Something wrong here!"
+
+            print("You: " + me)
+            sbc.set_brightness(me, display=0)  # set brightness down in system
+            ai_brain = "Ok, brightness down in " + str(me) + "% !"
+
+# TEMPERATURE:
         elif "temperature" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 print("Roxie: What are you looking for sir? ")
@@ -81,10 +119,12 @@ def Roxie1():
             temp2 = data.find("div", class_='BNeawe').text
             ai_brain = "The " + temp + " is " + temp2
 
+# OPENING WEBSITE:
         elif "Google" in me:
             ai_brain = str(random.choice(google))
             webbrowser.open('https://www.google.com.vn/')
 
+# ENTERTAINMENT APP:
         elif "entertainment" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 print("Roxie: How do you want to entertain? ")
@@ -138,10 +178,12 @@ def Roxie1():
             else:
                 ai_brain = "No application you want sir. Try again!"
 
+# CLOSE ALL TAB ON WEBSITE:
         elif "close" in me or "turn off" in me:
             ai_brain = str(random.choice(voice1))
             os.system("taskkill /im chrome.exe /f")
 
+# HEAL-CARE:
         elif "healthy" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 print("Roxie: What do you need me to do sir? ")
@@ -200,6 +242,7 @@ def Roxie1():
             else:
                 ai_brain = "You should follow the instructions of this menu to stay healthy, sir!"
 
+# SEARCHING INFORMATION:
         elif "searching" in me or "information" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 print("Roxie: What are you looking for sir? ")
@@ -216,6 +259,7 @@ def Roxie1():
             wikipedia.set_lang("en")
             ai_brain = wikipedia.summary(info, sentences=8)
 
+# QUIT:
         elif "bye" in me or "see" in me:
             ai_brain = str(random.choice(end))
 
@@ -226,9 +270,11 @@ def Roxie1():
             ai_mouth.runAndWait()
             break
 
+# SAY THANKS YOU:
         elif "thank" in me or "thanks" in me:
             ai_brain = str(random.choice(thanks))
 
+# ANOTHER KEYS:
         else:
             if "about" in me:
                 ai_brain = "I'm fine thanks! So what do you want me do Sir?"

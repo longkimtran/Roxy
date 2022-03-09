@@ -220,3 +220,17 @@ pyautogui.keyDown('shift')
 pyautogui.write(['left', 'left', 'left', 'left', 'left', 'left'])
 pyautogui.keyUp('shift')
 pyautogui.hotkey('ctrl', 'c')"""
+
+import screen_brightness_control as sbc
+
+print(sbc.get_brightness())
+
+# set brightness to 50%
+sbc.set_brightness(50)
+
+print(sbc.get_brightness())
+
+# set the brightness of the primary display to 75%
+sbc.set_brightness(100, display=0)
+
+print(sbc.get_brightness())

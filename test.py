@@ -205,7 +205,6 @@ elif bmi >= 35.1:
 else:
     ai_brain = "Some thing wrong sir. Try again!"""
 
-
 """import pyautogui
 screenWidth, screenHeight = pyautogui.size() # Returns two integers, the width and height of the screen. (The primary monitor, in multi-monitor setups.)
 currentMouseX, currentMouseY = pyautogui.position() # Returns two integers, the x and y of the mouse cursor's current position.
@@ -221,7 +220,7 @@ pyautogui.write(['left', 'left', 'left', 'left', 'left', 'left'])
 pyautogui.keyUp('shift')
 pyautogui.hotkey('ctrl', 'c')"""
 
-import screen_brightness_control as sbc
+"""import screen_brightness_control as sbc
 
 print(sbc.get_brightness())
 
@@ -233,4 +232,11 @@ print(sbc.get_brightness())
 # set the brightness of the primary display to 75%
 sbc.set_brightness(100, display=0)
 
-print(sbc.get_brightness())
+print(sbc.get_brightness())"""
+
+from Data_Roxie import name
+
+f = input("Please enter a fruit name:\n")
+name.append(f)
+
+print(name)

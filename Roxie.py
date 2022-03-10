@@ -13,7 +13,7 @@ import wikipedia
 from bs4 import BeautifulSoup
 import screen_brightness_control as sbc
 
-from Data_Roxie import hello, google, end, unknown, thanks, voice1, web_data, intro
+from Data_Roxie import hello, google, end, unknown, thanks, voice1, web_data, intro, name
 from Data_Roxie2 import water1, food_monday, food_friday, food_tuesday, \
     food_sunday, food_saturday, food_thursday, food_wednesday, wei1, wei2, wei3, activity1
 
@@ -39,6 +39,21 @@ def Roxie1():
 # SAY HELLO:
         if "hello" in me:
             ai_brain = str(random.choice(hello))
+
+# KNOWING ME:
+        if "I" in me:
+            with sr.Microphone() as mic:  # Use micro in system
+                print("Roxie: Who are you?")
+                audio = ai_hear.listen(mic, timeout=6,
+                                       phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+
+            print("Roxie:....")
+            try:
+               me = ai_hear.recognize_google(audio)
+            except:
+                me = "Something wrong here!"
+
+            ai_brain = "Oh hello " + me + " my master!"
 
 # INTRODUCTION OF ROXY:
         elif "who" in me or "introduce" in me:

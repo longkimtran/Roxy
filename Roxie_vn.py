@@ -41,6 +41,21 @@ def Roxie2():
         if "Xin chào" in me or "Hello" in me or "Hi" in me:
             ai_brain = str(random.choice(hello_vn))
 
+# KNOWING ME:
+        elif "tôi" in me:
+            with sr.Microphone() as mic:  # Use micro in system
+                print("Roxie: Vậy ngài là ai?")
+                audio = ai_hear.listen(mic, timeout=6,
+                                       phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+
+            print("Roxie:....")
+            try:
+                me = ai_hear.recognize_google(audio, language="vi-VN")
+            except:
+                me = "Có gì đó không đúng!"
+
+            ai_brain = "Oh Xin chào " + me + ", chủ nhân của tôi!"
+
 # INTRODUCTION OF ROXY:
         elif "giới thiệu" in me or "ai" in me:
             ai_brain = str(intro_vn)

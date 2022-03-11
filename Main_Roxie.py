@@ -30,7 +30,7 @@ class MainWindow:
         def wish():
             hour = int(datetime.datetime.now().hour)
             if 8 <= hour <= 12:
-                ai_brain2 = "Good morning sir. I'm Roxy your virtual assistance. Please choose your language for you, " \
+                ai_brain2 = "Good morning sir. I'm Roxy your virtual assistance. Please choose your language for you, "\
                             "sir! "
             elif 12 < hour < 18:
                 ai_brain2 = "Good afternoon sir. I'm Roxy your virtual assistance. Please choose your language for " \

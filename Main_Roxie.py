@@ -24,6 +24,7 @@ class MainWindow:
         self.uic = Ui_Roxy()
         self.uic.setupUi(self.main_win)
         self.uic.Start_Button.clicked.connect(self.Roxy_AI)
+        self.uic.Quit_Button.clicked.connect(self.main_win.close)
 
     def Roxy_AI(self):
         def wish():

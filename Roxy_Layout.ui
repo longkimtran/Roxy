@@ -6,38 +6,67 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>839</width>
-    <height>638</height>
+    <width>1017</width>
+    <height>745</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="Screen" native="true">
+  <widget class="QPushButton" name="Quit_Button">
    <property name="geometry">
     <rect>
-     <x>-1</x>
-     <y>-1</y>
-     <width>841</width>
-     <height>641</height>
+     <x>840</x>
+     <y>370</y>
+     <width>141</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image: url(:/newPrefix/D:/Virtual_Assisstance_Project/Personal Voice Assistant.gif);</string>
+    <string notr="true">color: rgb(255, 0, 0);
+text-decoration: underline;
+font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
    </property>
-   <widget class="QPushButton" name="Start_Button">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>480</y>
-      <width>191</width>
-      <height>91</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Start</string>
-    </property>
-   </widget>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Start_Button">
+   <property name="geometry">
+    <rect>
+     <x>840</x>
+     <y>260</y>
+     <width>141</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 0, 0);
+text-decoration: underline;
+font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Start</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>811</width>
+     <height>741</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>C:/Users/ASUS/Pictures/female-virtual-assistant-icon.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
   </widget>
  </widget>
  <resources>

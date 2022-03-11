@@ -41,7 +41,7 @@ def Roxie1():
             ai_brain = str(random.choice(hello))
 
 # KNOWING ME:
-        if "I" in me:
+        elif "me" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 print("Roxie: Who are you?")
                 audio = ai_hear.listen(mic, timeout=6,

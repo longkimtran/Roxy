@@ -13,11 +13,11 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QFrame" name="frame">
+  <widget class="QWidget" name="Screen" native="true">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
+     <x>-1</x>
+     <y>-1</y>
      <width>841</width>
      <height>641</height>
     </rect>
@@ -25,18 +25,12 @@
    <property name="styleSheet">
     <string notr="true">background-image: url(:/newPrefix/D:/Virtual_Assisstance_Project/Personal Voice Assistant.gif);</string>
    </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="Start_Button">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>30</x>
       <y>480</y>
-      <width>181</width>
+      <width>191</width>
       <height>91</height>
      </rect>
     </property>

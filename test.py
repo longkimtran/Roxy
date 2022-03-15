@@ -234,9 +234,9 @@ sbc.set_brightness(100, display=0)
 
 print(sbc.get_brightness())"""
 
-from Data_Roxie import name
+"""from Data_Roxie import name
 
 f = input("Please enter a fruit name:\n")
 name.append(f)
 
-print(name)
+print(name)"""

@@ -13,6 +13,7 @@ import wikipedia
 from bs4 import BeautifulSoup
 import screen_brightness_control as sbc
 
+import Global
 from Data_Roxie import hello, google, end, unknown, thanks, voice1, web_data, intro
 from Data_Roxie2 import water1, food_monday, food_friday, food_tuesday, \
     food_sunday, food_saturday, food_thursday, food_wednesday, wei1, wei2, wei3, activity1
@@ -25,21 +26,17 @@ def Roxie1(self):
 
     while True:
         with sr.Microphone() as mic:  # Use micro in system
-            print("Roxie: I'm hearing !")
-            self.uic.Roxy_Talk.append("Roxie: I'm hearing !")
+            Global.machine_text(self, Global.MACHINE_WAITING_1)
             audio = ai_hear.listen(mic, timeout=6,
                                    phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-            print("Roxie:....")
             try:
                 me = ai_hear.recognize_google(audio)
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.user_text(self, me)
 
             except:
                 me = "I cannot recognize your voice."
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("Roxie: " + me)
+                Global.machine_text(self, me)
 
             # SAY HELLO:
             if "hello" in me:
@@ -48,20 +45,16 @@ def Roxie1(self):
             # KNOWING ME:
             elif "know" in me:
                 with sr.Microphone() as mic:  # Use micro in system
-                    print("Roxie: Who are you?")
-                    self.uic.Roxy_Talk.append("Roxie: Who are you?")
+                    Global.machine_text(self, Global.MACHINE_KNOWING)
                     audio = ai_hear.listen(mic, timeout=6,
                                            phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-                print("Roxie:....")
                 try:
                     me = ai_hear.recognize_google(audio)
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.user_text(self, me)
                 except:
                     me = "Something wrong here!"
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.machine_text(self, me)
 
                 ai_brain = "Oh hello " + me + " my master!"
 
@@ -95,40 +88,33 @@ def Roxie1(self):
             # ALTER BRIGHTNESS ON SCREEN:
             elif "brightness up" in me:
                 with sr.Microphone() as mic:  # Use micro in system
-                    print("Roxie: How much brightness increase is appropriate, sir? ")
-                    self.uic.Roxy_Talk.append("Roxie: How much brightness increase is appropriate, sir?")
+                    Global.machine_text(self, Global.MACHINE_CONTROL_BRIGHTNESS)
                     audio = ai_hear.listen(mic, timeout=6,
                                            phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-                print("Roxie:....")
                 try:
                     me = ai_hear.recognize_google(audio)
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.user_text(self, me)
 
                 except:
                     me = "Something wrong here!"
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.machine_text(self, me)
 
                 sbc.set_brightness(me, display=0)  # set brightness up in system
                 ai_brain = "Ok, brightness up in " + str(me) + "% !"
 
             elif "brightness down" in me:
                 with sr.Microphone() as mic:  # Use micro in system
-                    print("Roxie: How much brightness reduction is appropriate, sir? ")
+                    Global.machine_text(self, Global.MACHINE_CONTROL_BRIGHTNESS_2)
                     audio = ai_hear.listen(mic, timeout=6,
                                            phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-                print("Roxie:....")
                 try:
                     me = ai_hear.recognize_google(audio)
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.user_text(self, me)
                 except:
                     me = "Something wrong here!"
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.machine_text(self, me)
 
                 sbc.set_brightness(me, display=0)  # set brightness down in system
                 ai_brain = "Ok, brightness down in " + str(me) + "% !"
@@ -136,27 +122,23 @@ def Roxie1(self):
             # TEMPERATURE:
             elif "temperature" in me:
                 with sr.Microphone() as mic:  # Use micro in system
-                    print("Roxie: What are you looking for sir?")
-                    self.uic.Roxy_Talk.append("Roxie: What are you looking for sir?")
+                    Global.machine_text(self, Global.MACHINE_TEMPERATURE)
                     audio = ai_hear_1.listen(mic, timeout=6,
                                              phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-                print("Roxie:....")
                 try:
                     temp = ai_hear_1.recognize_google(audio)
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.user_text(self, temp)
                 except:
                     temp = "Something wrong here!"
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.user_text(self, temp)
 
                 url = f"https://www.google.com/search?q={temp}"
                 r = requests.get(url)
                 data = BeautifulSoup(r.text, "html.parser")
                 # Web Scraping Values on Google Search Results
                 temp2 = data.find("div", class_='BNeawe').text
-                ai_brain = "The " + temp + " is " + temp2
+                ai_brain = "The " + temp + " is " + temp2 + " sir!"
 
             # OPENING WEBSITE:
             elif "Google" in me:
@@ -166,20 +148,16 @@ def Roxie1(self):
             # ENTERTAINMENT APP:
             elif "entertainment" in me:
                 with sr.Microphone() as mic:  # Use micro in system
-                    print("Roxie: How do you want to entertain?")
-                    self.uic.Roxy_Talk.append("Roxie: How do you want to entertain?")
+                    Global.machine_text(self, Global.MACHINE_ENTERTAINMENT)
                     audio = ai_hear_1.listen(mic, timeout=6,
                                              phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-                print("Roxie:....")
                 try:
                     me = ai_hear_1.recognize_google(audio)
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.user_text(self, me)
                 except:
                     me = "Something wrong here!"
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.user_text(self, me)
 
                 if "website" in me:
                     ai_brain = str(random.choice(voice1))
@@ -191,22 +169,17 @@ def Roxie1(self):
 
                 elif "game" in me:
                     with sr.Microphone() as mic:  # Use micro in system
-                        print("Roxie: What do you want game? ")
-                        self.uic.Roxy_Talk.append("Roxie: What do you want game?")
+                        Global.machine_text(self, Global.MACHINE_GAME)
                         audio = ai_hear_1.listen(mic, timeout=6,
                                                  phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-                    print("Roxie:....")
                     try:
                         me = ai_hear_1.recognize_google(audio)
-                        print("You: " + me)
-                        self.uic.Roxy_Talk.append("You: " + me)
+                        Global.user_text(self, me)
                     except:
                         me = "Something wrong here!"
-                        print("You: " + me)
-                        self.uic.Roxy_Talk.append("You: " + me)
+                        Global.user_text(self, me)
 
-                    print("You: " + me)
                     if "Steam" in me or "steam" in me:
                         ai_brain = str(random.choice(voice1))
                         # subprocess.call() will help open fil in your pc or lap
@@ -233,20 +206,16 @@ def Roxie1(self):
             # HEAL-CARE:
             elif "healthy" in me:
                 with sr.Microphone() as mic:  # Use micro in system
-                    print("Roxie: What do you need me to do sir? ")
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.machine_text(self, Global.MACHINE_HEALTH_CARE)
                     audio = ai_hear_1.listen(mic, timeout=6,
                                              phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-                print("Roxie:....")
                 try:
                     me = ai_hear_1.recognize_google(audio)
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.user_text(self, me)
                 except:
                     me = "Something wrong here!"
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.user_text(self, me)
 
                 if "water" in me:
                     ai_brain = str(water1)
@@ -268,7 +237,7 @@ def Roxie1(self):
                         ai_brain = "Today is " + curr_date + ", " + str(food_sunday)
 
                 elif "BMI" in me or "weight" in me:
-                    ai_brain = "Please enter your weight and height, sir!"
+                    print("Please enter your weight and height, sir!")
                     weight = float(input("Enter your weight(kg):  "))
                     height = float(input("Enter your height(meter): "))
 
@@ -296,20 +265,15 @@ def Roxie1(self):
             # SEARCHING INFORMATION:
             elif "searching" in me or "information" in me:
                 with sr.Microphone() as mic:  # Use micro in system
-                    print("Roxie: What are you looking for sir? ")
-                    self.uic.Roxy_Talk.append("Roxie: What are you looking for sir? ")
+                    Global.machine_text(self, Global.MACHINE_INFORMATION)
                     audio = ai_hear_1.listen(mic, timeout=6,
                                              phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-
-                print("Roxie:....")
                 try:
                     info = ai_hear_1.recognize_google(audio)
-                    print("You: " + info)
-                    self.uic.Roxy_Talk.append("You: " + info)
+                    Global.user_text(self, info)
                 except:
                     info = "Something wrong here!"
-                    print("You: " + info)
-                    self.uic.Roxy_Talk.append("You: " + info)
+                    Global.user_text(self, info)
 
                 wikipedia.set_lang("en")
                 ai_brain = wikipedia.summary(info, sentences=8)
@@ -318,8 +282,7 @@ def Roxie1(self):
             elif "bye" in me or "see" in me:
                 ai_brain = str(random.choice(end))
 
-                print("Roxie: " + ai_brain)
-                self.uic.Roxy_Talk.append("Roxie: " + ai_brain)
+                Global.machine_text(self, ai_brain)
                 voices = ai_mouth.getProperty('voices')
                 ai_mouth.setProperty('voice', voices[1].id)  # voice AI: 0(Male), 1(Female)
                 ai_mouth.say(ai_brain)
@@ -337,9 +300,8 @@ def Roxie1(self):
                 else:
                     ai_brain = str(random.choice(unknown))
 
-            print("Roxie: " + ai_brain)
             voices = ai_mouth.getProperty('voices')
-            self.uic.Roxy_Talk.append("Roxy: " + str(ai_brain))
+            Global.machine_text(self, ai_brain)
             ai_mouth.setProperty('voice', voices[1].id)  # voice AI: 0(Male), 1(Female)
             ai_mouth.say(ai_brain)
             ai_mouth.runAndWait()

@@ -36,7 +36,7 @@ class Ui_Roxy(object):
         self.label = QtWidgets.QLabel(Roxy)
         self.label.setGeometry(QtCore.QRect(20, 110, 341, 311))
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("C:/Users/ASUS/Pictures/female-virtual-assistant-icon.png"))
+        self.label.setPixmap(QtGui.QPixmap("female-virtual-assistant-icon.png"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
         self.label_4 = QtWidgets.QLabel(Roxy)
@@ -50,6 +50,7 @@ class Ui_Roxy(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         self.Roxy_Talk.setFont(font)
+        self.Roxy_Talk.setReadOnly(False)
         self.Roxy_Talk.setObjectName("Roxy_Talk")
 
         self.retranslateUi(Roxy)
@@ -57,7 +58,7 @@ class Ui_Roxy(object):
 
     def retranslateUi(self, Roxy):
         _translate = QtCore.QCoreApplication.translate
-        Roxy.setWindowTitle(_translate("Roxy", "Dialog"))
+        Roxy.setWindowTitle(_translate("Roxy", "Roxy The Personal Assistant"))
         self.Quit_Button.setText(_translate("Roxy", "Quit"))
         self.Start_Button.setText(_translate("Roxy", "Start"))
         self.label_4.setText(_translate("Roxy", "Chat Box"))
@@ -66,7 +67,6 @@ class Ui_Roxy(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-
 
 
 if __name__ == "__main__":

@@ -71,7 +71,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>C:/Users/ASUS/Pictures/female-virtual-assistant-icon.png</pixmap>
+    <pixmap>female-virtual-assistant-icon.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -108,6 +108,9 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
     <font>
      <pointsize>12</pointsize>
     </font>
+   </property>
+   <property name="readOnly">
+    <bool>false</bool>
    </property>
    <property name="html">
     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;

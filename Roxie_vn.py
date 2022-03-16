@@ -14,7 +14,7 @@ from bs4 import BeautifulSoup
 from gtts import gTTS
 from playsound import playsound
 
-
+import Global
 from Data_Roxie import hello_vn, google_vn, end_vn, unknown_vn, \
     thanks_vn, voice_vn1, web_data, intro_vn
 from Data_Roxie3 import water2, food_friday_vn, food_monday_vn, food_saturday_vn, \
@@ -27,19 +27,16 @@ def Roxie2(self):
 
     while True:
         with sr.Microphone() as mic:  # Use micro in system
-            print("Roxie: Tôi đang nghe !")
-            self.uic.Roxy_Talk.append("Roxie: Tôi đang nghe!")
-            audio = ai_hear.listen(mic, timeout=6, phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+            Global.machine_text(self, Global.MACHINE_WAITING_VN)
+            audio = ai_hear.listen(mic, timeout=6,
+                                   phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-        print("Roxie:....")
         try:
             me = ai_hear.recognize_google(audio, language="vi-VN")
-            print("You: " + me)
-            self.uic.Roxy_Talk.append("You: " + me)
+            Global.user_text(self, me)
         except:
             me = "Tôi không hiểu !"
-            print("You: " + me)
-            self.uic.Roxy_Talk.append("You: " + me)
+            Global.machine_text(self, me)
 
 # SAY HELLO:
         if "Xin chào" in me or "Hello" in me or "Hi" in me:
@@ -48,20 +45,17 @@ def Roxie2(self):
 # KNOWING ME:
         elif "tôi" in me:
             with sr.Microphone() as mic:  # Use micro in system
-                print("Roxie: Vậy ngài là ai?")
-                self.uic.Roxy_Talk.append("Roxie: Vậy ngài là ai?")
+                Global.machine_text(self, Global.MACHINE_KNOWING_VN)
                 audio = ai_hear.listen(mic, timeout=6,
                                        phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
             print("Roxie:....")
             try:
                 me = ai_hear.recognize_google(audio, language="vi-VN")
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.user_text(self, me)
             except:
                 me = "Có gì đó không đúng!"
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.machine_text(self, me)
 
             ai_brain = "Oh Xin chào " + me + ", chủ nhân của tôi!"
 
@@ -95,40 +89,34 @@ def Roxie2(self):
 # ALTER BRIGHTNESS ON SCREEN:
         elif "tăng độ sáng" in me or "Tăng độ sáng" in me:
             with sr.Microphone() as mic:  # Use micro in system
-                print("Roxie: Tăng bao nhiêu phần trăm độ sáng thưa ngài ?")
-                self.uic.Roxy_Talk.append("Roxie: Tăng bao nhiêu phần trăm độ sáng thưa ngài ?")
+                Global.machine_text(self, Global.MACHINE_CONTROL_BRIGHTNESS_VN)
                 audio = ai_hear.listen(mic, timeout=6,
                                        phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
             print("Roxie:....")
             try:
                 me = ai_hear.recognize_google(audio, language="vi-VN")
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.user_text(self, me)
             except:
                 me = "Có gì đó không đúng!"
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.machine_text(self, me)
 
             sbc.set_brightness(me, display=0)  # set brightness up in system
             ai_brain = "Tăng độ sáng lên " + str(me) + "% !"
 
         elif "giảm độ sáng" in me or "Giảm độ sáng" in me:
             with sr.Microphone() as mic:  # Use micro in system
-                print("Roxie: Giảm độ sáng bao nhiêu phần trăm thưa ngài ?")
-                self.uic.Roxy_Talk.append("Roxie: Giảm độ sáng bao nhiêu phần trăm thưa ngài ?")
+                Global.machine_text(self, Global.MACHINE_CONTROL_BRIGHTNESS_2_VN)
                 audio = ai_hear.listen(mic, timeout=6,
                                        phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
             print("Roxie:....")
             try:
                 me = ai_hear.recognize_google(audio, language="vi-VN")
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.user_text(self, me)
             except:
                 me = "Có gì đó không đúng!"
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.machine_text(self, me)
 
             sbc.set_brightness(me, display=0)  # set brightness down in system
             ai_brain = "Giảm độ sáng xuống " + str(me) + "% !"
@@ -136,27 +124,23 @@ def Roxie2(self):
 # TEMPERATURE:
         elif "nhiệt độ" in me:
             with sr.Microphone() as mic:  # Use micro in system
-                print("Roxie: Ngài muốn nhiệt độ ở đâu? ")
-                self.uic.Roxy_Talk.append("Roxie: Ngài muốn nhiệt độ ở đâu? ")
+                Global.machine_text(self, Global.MACHINE_TEMPERATURE_VN)
                 audio = ai_hear_1.listen(mic, timeout=6,
                                          phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-            print("Roxie:....")
             try:
                 temp = ai_hear_1.recognize_google(audio, language="vi-VN")
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.user_text(self, temp)
             except:
                 temp = "Có gì đó không đúng!"
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.machine_text(self, temp)
 
             url = f"https://www.google.com/search?q={temp}"
             r = requests.get(url)
             data = BeautifulSoup(r.text, "html.parser")
             # Web Scraping Values on Google Search Results
             temp2 = data.find("div", class_='BNeawe').text
-            ai_brain = temp + " là " + temp2
+            ai_brain = temp + " là " + temp2 + " thưa ngài!"
 
 # OPENING WEBSITE:
         elif "Google" in me:
@@ -166,20 +150,17 @@ def Roxie2(self):
 # ENTERTAINMENT APP:
         elif "giải trí" in me:
             with sr.Microphone() as mic:  # Use micro in system
-                print("Roxie: Ngài muốn giải trí như thế nào? ")
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.machine_text(self, Global.MACHINE_ENTERTAINMENT_VN)
                 audio = ai_hear_1.listen(mic, timeout=6,
                                          phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
             print("Roxie:....")
 
             try:
                 me = ai_hear_1.recognize_google(audio, language="vi-VN")
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.user_text(self, me)
             except:
                 me = "Có gì đó không đúng!"
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.machine_text(self, me)
 
             if "trình duyệt" in me:
                 ai_brain = str(random.choice(voice_vn1))
@@ -191,21 +172,16 @@ def Roxie2(self):
 
             elif "trò chơi" in me:
                 with sr.Microphone() as mic:  # Use micro in system
-                    print("Roxie: Ngài muốn chơi trò chơi gì?")
-                    self.uic.Roxy_Talk.append("Roxie: Ngài muốn chơi trò chơi gì?")
+                    Global.machine_text(self, Global.MACHINE_GAME_VN)
                     audio = ai_hear_1.listen(mic, timeout=6,
                                              phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-                print("Roxie:....")
-
                 try:
                     me = ai_hear_1.recognize_google(audio, language="vi-VN")
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.user_text(self, me)
                 except:
                     me = "Có gì đó không đúng!"
-                    print("You: " + me)
-                    self.uic.Roxy_Talk.append("You: " + me)
+                    Global.machine_text(self, me)
 
                 if "steam" in me or "Steam" in me:
                     ai_brain = str(random.choice(voice_vn1))
@@ -234,20 +210,16 @@ def Roxie2(self):
 # HEAL-CARE:
         elif "sức khỏe" in me:
             with sr.Microphone() as mic:  # Use micro in system
-                print("Roxie: Hôm nay ngài cần gì về sức khỏe?")
-                self.uic.Roxy_Talk.append("Roxie: Hôm nay ngài cần gì về sức khỏe?")
+                Global.machine_text(self, Global.MACHINE_HEALTH_CARE_VN)
                 audio = ai_hear_1.listen(mic, timeout=6,
                                          phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-            print("Roxie:....")
             try:
                 me = ai_hear_1.recognize_google(audio, language="vi-VN")
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.user_text(self, me)
             except:
                 me = "Có gì đó không đúng ở đây. Ngài nên thử lại!"
-                print("You: " + me)
-                self.uic.Roxy_Talk.append("You: " + me)
+                Global.machine_text(self, me)
 
             if "nước" in me:
                 ai_brain = str(water2)
@@ -299,20 +271,16 @@ def Roxie2(self):
 # SEARCHING INFORMATION:
         elif "tìm kiếm" in me or "thông tin" in me:
             with sr.Microphone() as mic:  # Use micro in system
-                print("Roxie: Bạn muốn tìm gì à? ")
-                self.uic.Roxy_Talk.append("Roxie: Bạn muốn tìm gì à?")
+                Global.machine_text(self, Global.MACHINE_INFORMATION_VN)
                 audio = ai_hear_1.listen(mic, timeout=6,
                                          phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-            print("Roxie:....")
             try:
                 info = ai_hear_1.recognize_google(audio)
-                print("You: " + info)
-                self.uic.Roxy_Talk.append("You: " + info)
+                Global.user_text(self, info)
             except:
                 info = "Hình như có gì đó không đúng!"
-                print("You: " + info)
-                self.uic.Roxy_Talk.append("You: " + info)
+                Global.machine_text(self, info)
 
             wikipedia.set_lang("vi")
             ai_brain = wikipedia.summary(info, sentences=8)
@@ -324,8 +292,8 @@ def Roxie2(self):
 # QUIT:
         elif "tạm biệt" in me or "Tạm biệt" in me:
             ai_brain = str(random.choice(end_vn))
-            print("Roxie: " + ai_brain)
-            self.uic.Roxy_Talk.append("Roxie: " + ai_brain)
+
+            Global.machine_text(self, ai_brain)
             tts = gTTS(ai_brain, tld="com.vn", lang="vi")
             tts.save("hi.mp3")
             playsound("hi.mp3")
@@ -340,8 +308,7 @@ def Roxie2(self):
             else:
                 ai_brain = str(random.choice(unknown_vn))
 
-        print("Roxie: " + ai_brain)
-        self.uic.Roxy_Talk.append("Roxie: " + ai_brain)
+        Global.machine_text(self, ai_brain)
         tts = gTTS(ai_brain, lang="vi")
         tts.save("hi.mp3")
         playsound("hi.mp3")

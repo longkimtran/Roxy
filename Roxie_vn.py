@@ -9,7 +9,7 @@ import pyautogui
 import requests
 import speech_recognition as sr
 import wikipedia
-import screen_brightness_control as sbc
+import wmi
 from bs4 import BeautifulSoup
 from gtts import gTTS
 from playsound import playsound
@@ -38,11 +38,11 @@ def Roxie2(self):
             me = "Tôi không hiểu !"
             Global.machine_text(self, me)
 
-# SAY HELLO:
+        # SAY HELLO:
         if "Xin chào" in me or "Hello" in me or "Hi" in me:
             ai_brain = str(random.choice(hello_vn))
 
-# KNOWING ME:
+        # KNOWING ME:
         elif "tôi" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 Global.machine_text(self, Global.MACHINE_KNOWING_VN)
@@ -59,21 +59,21 @@ def Roxie2(self):
 
             ai_brain = "Oh Xin chào " + me + ", chủ nhân của tôi!"
 
-# INTRODUCTION OF ROXY:
+        # INTRODUCTION OF ROXY:
         elif "giới thiệu" in me or "ai" in me:
             ai_brain = str(intro_vn)
 
-# DAY IN CURRENT:
+        # DAY IN CURRENT:
         elif "ngày" in me:
             today = date.today()  # use current date real life
             ai_brain = today.strftime("%d/%m/%Y")
 
-# TIME IN CURRENT:
+        # TIME IN CURRENT:
         elif "giờ" in me:
             now = datetime.now()
             ai_brain = now.strftime("%H:%M:%S")
 
-# ALTER VOLUME UP-DOWN-MUTE:
+        # ALTER VOLUME UP-DOWN-MUTE:
         elif "tăng" in me:
             pyautogui.press("volumeup")  # volume up in system
             ai_brain = "Đã tăng âm lượng!"
@@ -86,14 +86,12 @@ def Roxie2(self):
             pyautogui.press("volumemute")  # mute volume in system
             ai_brain = "Tắt tiếng!"
 
-# ALTER BRIGHTNESS ON SCREEN:
-        elif "tăng độ sáng" in me or "Tăng độ sáng" in me:
+        # ALTER BRIGHTNESS ON SCREEN:
+        elif ("điều chỉnh" in me and "độ sáng" in me) or "màn hình" in me or "độ sáng" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 Global.machine_text(self, Global.MACHINE_CONTROL_BRIGHTNESS_VN)
                 audio = ai_hear.listen(mic, timeout=6,
                                        phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-
-            print("Roxie:....")
             try:
                 me = ai_hear.recognize_google(audio, language="vi-VN")
                 Global.user_text(self, me)
@@ -101,27 +99,12 @@ def Roxie2(self):
                 me = "Có gì đó không đúng!"
                 Global.machine_text(self, me)
 
-            sbc.set_brightness(me, display=0)  # set brightness up in system
-            ai_brain = "Tăng độ sáng lên " + str(me) + "% !"
+            c = wmi.WMI(namespace='wmi')
+            methods = c.WmiMonitorBrightnessMethods()[0]
+            ai_brain = "Độ sáng đươc điều chỉnh ở mức " + me + "% !"
+            methods.WmiSetBrightness(me, 0)
 
-        elif "giảm độ sáng" in me or "Giảm độ sáng" in me:
-            with sr.Microphone() as mic:  # Use micro in system
-                Global.machine_text(self, Global.MACHINE_CONTROL_BRIGHTNESS_2_VN)
-                audio = ai_hear.listen(mic, timeout=6,
-                                       phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-
-            print("Roxie:....")
-            try:
-                me = ai_hear.recognize_google(audio, language="vi-VN")
-                Global.user_text(self, me)
-            except:
-                me = "Có gì đó không đúng!"
-                Global.machine_text(self, me)
-
-            sbc.set_brightness(me, display=0)  # set brightness down in system
-            ai_brain = "Giảm độ sáng xuống " + str(me) + "% !"
-
-# TEMPERATURE:
+        # TEMPERATURE:
         elif "nhiệt độ" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 Global.machine_text(self, Global.MACHINE_TEMPERATURE_VN)
@@ -142,12 +125,12 @@ def Roxie2(self):
             temp2 = data.find("div", class_='BNeawe').text
             ai_brain = temp + " là " + temp2 + " thưa ngài!"
 
-# OPENING WEBSITE:
+        # OPENING WEBSITE:
         elif "Google" in me:
             ai_brain = str(random.choice(google_vn))
             webbrowser.open('https://www.google.com.vn/')
 
-# ENTERTAINMENT APP:
+        # ENTERTAINMENT APP:
         elif "giải trí" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 Global.machine_text(self, Global.MACHINE_ENTERTAINMENT_VN)
@@ -202,12 +185,12 @@ def Roxie2(self):
             else:
                 ai_brain = "Không có mục giải trí ngài cần. Hãy thử lại!"
 
-# CLOSE ALL TAB ON WEBSITE:
+        # CLOSE ALL TAB ON WEBSITE:
         elif "đóng" in me:
             ai_brain = str(random.choice(voice_vn1))
             os.system("taskkill /im chrome.exe /f")
 
-# HEAL-CARE:
+        # HEAL-CARE:
         elif "sức khỏe" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 Global.machine_text(self, Global.MACHINE_HEALTH_CARE_VN)
@@ -268,7 +251,7 @@ def Roxie2(self):
             else:
                 ai_brain = "Ngài nên theo chỉ dẫn của thực đơn này để giữ cho sức khỏe được khỏe mạnh!"
 
-# SEARCHING INFORMATION:
+        # SEARCHING INFORMATION:
         elif "tìm kiếm" in me or "thông tin" in me:
             with sr.Microphone() as mic:  # Use micro in system
                 Global.machine_text(self, Global.MACHINE_INFORMATION_VN)
@@ -285,11 +268,11 @@ def Roxie2(self):
             wikipedia.set_lang("vi")
             ai_brain = wikipedia.summary(info, sentences=8)
 
-# SAY THANKS YOU:
+        # SAY THANKS YOU:
         elif "cảm ơn" in me or "Cảm ơn" in me:
             ai_brain = str(random.choice(thanks_vn))
 
-# QUIT:
+        # QUIT:
         elif "tạm biệt" in me or "Tạm biệt" in me:
             ai_brain = str(random.choice(end_vn))
 
@@ -297,9 +280,10 @@ def Roxie2(self):
             tts = gTTS(ai_brain, tld="com.vn", lang="vi")
             tts.save("hi.mp3")
             playsound("hi.mp3")
+            os.remove("hi.mp3")
             break
 
-# ANOTHER KEYS:
+        # ANOTHER KEYS:
         else:
             if "thế nào" in me:
                 ai_brain = "Tôi khỏe, ngài cần tôi làm gì nào?"

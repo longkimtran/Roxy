@@ -11,7 +11,7 @@ import requests
 import speech_recognition as sr
 import wikipedia
 from bs4 import BeautifulSoup
-import screen_brightness_control as sbc
+import wmi
 
 import Global
 from Data_Roxie import hello, google, end, unknown, thanks, voice1, web_data, intro
@@ -86,7 +86,7 @@ def Roxie1(self):
                 ai_brain = "Ok, mute volume !"
 
             # ALTER BRIGHTNESS ON SCREEN:
-            elif "brightness up" in me:
+            elif "brightness" in me:
                 with sr.Microphone() as mic:  # Use micro in system
                     Global.machine_text(self, Global.MACHINE_CONTROL_BRIGHTNESS)
                     audio = ai_hear.listen(mic, timeout=6,
@@ -100,26 +100,11 @@ def Roxie1(self):
                     me = "Something wrong here!"
                     Global.machine_text(self, me)
 
-                sbc.set_brightness(me, display=0)  # set brightness up in system
-                ai_brain = "Ok, brightness up in " + str(me) + "% !"
+                c = wmi.WMI(namespace='wmi')
+                methods = c.WmiMonitorBrightnessMethods()[0]
+                ai_brain = "Ok, Brightness is adjusted at " + me + "% !"
+                methods.WmiSetBrightness(me, 0)
 
-            elif "brightness down" in me:
-                with sr.Microphone() as mic:  # Use micro in system
-                    Global.machine_text(self, Global.MACHINE_CONTROL_BRIGHTNESS_2)
-                    audio = ai_hear.listen(mic, timeout=6,
-                                           phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-
-                try:
-                    me = ai_hear.recognize_google(audio)
-                    Global.user_text(self, me)
-                except:
-                    me = "Something wrong here!"
-                    Global.machine_text(self, me)
-
-                sbc.set_brightness(me, display=0)  # set brightness down in system
-                ai_brain = "Ok, brightness down in " + str(me) + "% !"
-
-            # TEMPERATURE:
             elif "temperature" in me:
                 with sr.Microphone() as mic:  # Use micro in system
                     Global.machine_text(self, Global.MACHINE_TEMPERATURE)
@@ -237,7 +222,36 @@ def Roxie1(self):
                         ai_brain = "Today is " + curr_date + ", " + str(food_sunday)
 
                 elif "BMI" in me or "weight" in me:
-                    print("Please enter your weight and height, sir!")
+                    """weight_num = []
+                    height_num = []
+                    with sr.Microphone() as mic:  # Use micro in system
+                        Global.machine_text(self, Global.MACHINE_HEALTH_CARE_BMI_WEIGHT)
+                        audio = ai_hear_1.listen(mic, timeout=6,
+                                                 phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+
+                    try:
+                        weight = ai_hear_1.recognize_google(audio)
+                        Global.user_text(self, weight)
+                    except:
+                        weight = "Something wrong here!"
+                        Global.user_text(self, weight)
+
+                    weight_num.append(float(weight))
+
+                    with sr.Microphone() as mic:  # Use micro in system
+                        Global.machine_text(self, Global.MACHINE_HEALTH_CARE_BMI_HEIGHT)
+                        audio = ai_hear_1.listen(mic, timeout=6,
+                                                 phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+
+                    try:
+                        height = ai_hear_1.recognize_google(audio)
+                        Global.user_text(self, height)
+                    except:
+                        height = "Something wrong here!"
+                        Global.user_text(self, height)
+
+                    height_num.append(float(height))"""
+
                     weight = float(input("Enter your weight(kg):  "))
                     height = float(input("Enter your height(meter): "))
 

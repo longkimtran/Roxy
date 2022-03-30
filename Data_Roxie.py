@@ -23,7 +23,7 @@ thanks_vn = ["Đó là trách nhiệm của tôi thưa ngài", "Không có gì t
 # Data of voices
 voice1 = ["Here you go, sir!", "If you want sir!", "This is what you need, sir!", "It's opening sir!",
           "As you wish sir!"]
-voice_vn1 = ["Như ngài mong muốn!", "Đây có lẽ là thứ ngài cần", "Nó đang mở thưa ngài"]
+voice_vn1 = ["Như ngài mong muốn!", "Đây có lẽ là thứ ngài cần"]
 
 # Data website
 web_data = ['https://www.nimo.tv/', 'https://www.youtube.com/', 'https://www.keybr.com/']

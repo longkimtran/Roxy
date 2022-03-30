@@ -32,7 +32,7 @@ info = input("Enter your info: ")
 wikipedia.set_lang("en")
 
 # printing the summary
-print(wikipedia.summary(info))"""
+print(wikipedia.summary(info))"""  # test import wikipedia
 
 """from gtts import gTTS
 import os
@@ -41,7 +41,7 @@ ai_brain = "chào bạn"
 
 tts = gTTS (text = ai_brain,tld="com.vn" ,lang = "vi" )
 tts.save("hi.mp3")
-playsound("hi.mp3")"""
+playsound("hi.mp3")"""  # test from gtts import gTTS, import os, from playsound import playsound
 
 """import random
 
@@ -240,3 +240,11 @@ f = input("Please enter a fruit name:\n")
 name.append(f)
 
 print(name)"""
+
+"""import wmi
+
+brightness = 100  # percentage [0-100] For changing thee screen
+c = wmi.WMI(namespace='wmi')
+methods = c.WmiMonitorBrightnessMethods()[0]
+methods.WmiSetBrightness(brightness, 0)"""
+

@@ -1,6 +1,8 @@
 # Some libraries use in AV
 import datetime
 import sys
+import threading
+import time
 import warnings
 
 import pyttsx3
@@ -18,6 +20,18 @@ ai_hear_1 = sr.Recognizer()
 ai_mouth = pyttsx3.init()
 
 warnings.filterwarnings("ignore")
+running = True
+
+
+"""def blink(self):
+    def run():
+        while running:
+            time.sleep(0.5)
+            if not running:
+                break
+
+    thread = threading.Thread(target=run)
+    thread.start()"""
 
 
 class MainWindow:
@@ -27,8 +41,17 @@ class MainWindow:
         self.main_win = QMainWindow()
         self.uic = Ui_Roxy()
         self.uic.setupUi(self.main_win)
-        self.uic.Start_Button.clicked.connect(self.Roxy_AI)
+        self.uic.Start_Pause_Button.clicked.connect(self.button_start_stop)
         self.uic.Quit_Button.clicked.connect(self.main_win.close)
+
+    def button_start_stop(self):
+        global running
+        if running:
+            self.uic.Start_Pause_Button.setText('Stop')
+            self.Roxy_AI()
+            self.uic.Start_Pause_Button.setText('Start')
+        else:
+            self.uic.Start_Pause_Button.setText('Start')
 
     def Roxy_AI(self):
         hour = int(datetime.datetime.now().hour)
@@ -49,7 +72,7 @@ class MainWindow:
         ai_mouth.say(ai_brain2)
         ai_mouth.runAndWait()
 
-        while True:
+        while running:
             with sr.Microphone() as mic:  # Use micro in system
                 Global.machine_text(self, Global.MACHINE_WAITING_2)
                 audio = ai_hear.listen(mic, timeout=6,

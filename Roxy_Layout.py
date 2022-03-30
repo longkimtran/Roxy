@@ -14,65 +14,83 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Roxy(object):
     def setupUi(self, Roxy):
         Roxy.setObjectName("Roxy")
-        Roxy.resize(1017, 745)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        Roxy.setFont(font)
+        Roxy.resize(1137, 732)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("female-virtual-assistant-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Roxy.setWindowIcon(icon)
-        self.Quit_Button = QtWidgets.QPushButton(Roxy)
-        self.Quit_Button.setGeometry(QtCore.QRect(540, 540, 251, 131))
-        self.Quit_Button.setStyleSheet("color: rgb(255, 0, 0);\n"
-"text-decoration: underline;\n"
-"font: 14pt \"MS Shell Dlg 2\";")
-        self.Quit_Button.setObjectName("Quit_Button")
-        self.Start_Button = QtWidgets.QPushButton(Roxy)
-        self.Start_Button.setGeometry(QtCore.QRect(160, 540, 241, 131))
-        self.Start_Button.setStyleSheet("color: rgb(255, 0, 0);\n"
-"text-decoration: underline;\n"
-"font: 14pt \"MS Shell Dlg 2\";")
-        self.Start_Button.setObjectName("Start_Button")
-        self.label = QtWidgets.QLabel(Roxy)
-        self.label.setGeometry(QtCore.QRect(20, 110, 341, 311))
+        self.centralwidget = QtWidgets.QWidget(Roxy)
+        self.centralwidget.setObjectName("centralwidget")
+        self.gridLayout_3 = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.label_4 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.label_4.setFont(font)
+        self.label_4.setAutoFillBackground(False)
+        self.label_4.setStyleSheet("")
+        self.label_4.setObjectName("label_4")
+        self.gridLayout_3.addWidget(self.label_4, 0, 1, 1, 1)
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setMinimumSize(QtCore.QSize(250, 250))
         self.label.setText("")
         self.label.setPixmap(QtGui.QPixmap("female-virtual-assistant-icon.png"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
-        self.label_4 = QtWidgets.QLabel(Roxy)
-        self.label_4.setGeometry(QtCore.QRect(640, 20, 131, 41))
-        font = QtGui.QFont()
-        font.setPointSize(20)
-        self.label_4.setFont(font)
-        self.label_4.setObjectName("label_4")
-        self.Roxy_Talk = QtWidgets.QTextEdit(Roxy)
-        self.Roxy_Talk.setGeometry(QtCore.QRect(370, 60, 641, 431))
+        self.gridLayout_3.addWidget(self.label, 1, 0, 1, 1)
+        self.gridLayout_2 = QtWidgets.QGridLayout()
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.Roxy_Talk = QtWidgets.QTextEdit(self.centralwidget)
+        self.Roxy_Talk.setMinimumSize(QtCore.QSize(500, 250))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.Roxy_Talk.setFont(font)
+        self.Roxy_Talk.setStyleSheet("background-image: url(:/newPrefix/D:/Virtual_Assisstance_Project/background-dep-5.png);")
         self.Roxy_Talk.setReadOnly(False)
         self.Roxy_Talk.setObjectName("Roxy_Talk")
+        self.gridLayout_2.addWidget(self.Roxy_Talk, 0, 0, 1, 1)
+        self.gridLayout = QtWidgets.QGridLayout()
+        self.gridLayout.setObjectName("gridLayout")
+        self.Quit_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.Quit_Button.setMinimumSize(QtCore.QSize(0, 100))
+        self.Quit_Button.setStyleSheet("color: rgb(255, 0, 0);\n"
+"text-decoration: underline;\n"
+"font: 14pt \"MS Shell Dlg 2\";")
+        self.Quit_Button.setObjectName("Quit_Button")
+        self.gridLayout.addWidget(self.Quit_Button, 0, 1, 1, 1)
+        self.Start_Pause_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.Start_Pause_Button.setMinimumSize(QtCore.QSize(0, 100))
+        self.Start_Pause_Button.setStyleSheet("color: rgb(255, 0, 0);\n"
+"text-decoration: underline;\n"
+"font: 14pt \"MS Shell Dlg 2\";")
+        self.Start_Pause_Button.setObjectName("Start_Pause_Button")
+        self.gridLayout.addWidget(self.Start_Pause_Button, 0, 0, 1, 1)
+        self.gridLayout_2.addLayout(self.gridLayout, 1, 0, 1, 1)
+        self.gridLayout_3.addLayout(self.gridLayout_2, 1, 1, 1, 1)
+        Roxy.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(Roxy)
+        self.statusbar.setObjectName("statusbar")
+        Roxy.setStatusBar(self.statusbar)
 
         self.retranslateUi(Roxy)
         QtCore.QMetaObject.connectSlotsByName(Roxy)
 
     def retranslateUi(self, Roxy):
         _translate = QtCore.QCoreApplication.translate
-        Roxy.setWindowTitle(_translate("Roxy", "Roxy The Personal Assistant"))
-        self.Quit_Button.setText(_translate("Roxy", "Quit"))
-        self.Start_Button.setText(_translate("Roxy", "Start"))
+        Roxy.setWindowTitle(_translate("Roxy", "Roxy"))
         self.label_4.setText(_translate("Roxy", "Chat Box"))
         self.Roxy_Talk.setHtml(_translate("Roxy", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.Quit_Button.setText(_translate("Roxy", "Quit"))
+        self.Start_Pause_Button.setText(_translate("Roxy", "Start"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Roxy = QtWidgets.QDialog()
+    Roxy = QtWidgets.QMainWindow()
     ui = Ui_Roxy()
     ui.setupUi(Roxy)
     Roxy.show()

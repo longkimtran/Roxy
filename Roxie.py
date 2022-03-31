@@ -276,6 +276,63 @@ def Roxie1(self):
                 else:
                     ai_brain = "You should follow the instructions of this menu to stay healthy, sir!"
 
+            # ALARM CLOCK:
+            elif "set" in me:
+                def validate_time(awake_time):
+                    if len(awake_time) != 11:
+                        err = "Invalid time format! Please try again..."
+                        Global.machine_text(self, err)
+                    else:
+                        if int(awake_time[0:2]) > 12:
+                            err1 = "Invalid HOUR format! Please try again..."
+                            Global.machine_text(self, err1)
+                        elif int(awake_time[3:5]) > 59:
+                            err2 = "Invalid MINUTE format! Please try again..."
+                            Global.machine_text(self, err2)
+                        elif int(awake_time[6:8]) > 59:
+                            err3 = "Invalid SECOND format! Please try again..."
+                            Global.machine_text(self, err3)
+                        else:
+                            return "ok"
+
+                while True:
+                    awake_time = input("Enter time in 'HH:MM:SS AM/PM' format: ")
+
+                    validate = validate_time(awake_time.lower())
+                    if validate != "ok":
+                        print(validate)
+                    else:
+                        Global.user_text(self, awake_time)
+
+                        ai_brain3 = "Ok I'll wake you up at " + awake_time + ", sir!"
+
+                        voices = ai_mouth.getProperty('voices')
+                        Global.machine_text(self, ai_brain3)
+                        ai_mouth.setProperty('voice', voices[1].id)  # voice AI: 0(Male), 1(Female)
+                        ai_mouth.say(ai_brain3)
+                        ai_mouth.runAndWait()
+                        break
+
+                alarm_hour = awake_time[0:2]
+                alarm_min = awake_time[3:5]
+                alarm_sec = awake_time[6:8]
+                alarm_period = awake_time[9:].upper()
+
+                while True:
+                    now = datetime.now()
+
+                    current_hour = now.strftime("%I")
+                    current_min = now.strftime("%M")
+                    current_sec = now.strftime("%S")
+                    current_period = now.strftime("%p")
+
+                    if alarm_period == current_period:
+                        if alarm_hour == current_hour:
+                            if alarm_min == current_min:
+                                if alarm_sec == current_sec:
+                                    ai_brain = "Time to wake-up sir!"
+                                    break
+
             # SEARCHING INFORMATION:
             elif "searching" in me or "information" in me:
                 with sr.Microphone() as mic:  # Use micro in system

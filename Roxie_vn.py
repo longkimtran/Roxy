@@ -251,6 +251,63 @@ def Roxie2(self):
             else:
                 ai_brain = "Ngài nên theo chỉ dẫn của thực đơn này để giữ cho sức khỏe được khỏe mạnh!"
 
+        # ALARM CLOCK:
+        elif "báo thức" in me:
+            def validate_time(awake_time):
+                if len(awake_time) != 11:
+                    err = "Định dạng thời gian không hợp lệ! Vui lòng thử lại..."
+                    Global.machine_text(self, err)
+                else:
+                    if int(awake_time[0:2]) > 12:
+                        err1 = "Định dạng GIỜ không hợp lệ! Vui lòng thử lại..."
+                        Global.machine_text(self, err1)
+                    elif int(awake_time[3:5]) > 59:
+                        err2 = "Định dạng PHÚT không hợp lệ! Vui lòng thử lại..."
+                        Global.machine_text(self, err2)
+                    elif int(awake_time[6:8]) > 59:
+                        err3 = "Định dạng GIÂY không hợp lệ! Vui lòng thử lại..."
+                        Global.machine_text(self, err3)
+                    else:
+                        return "ok"
+
+            while True:
+                awake_time = input("Nhập thời gian ở định dạng 'HH:MM:SS AM/PM': ")
+
+                validate = validate_time(awake_time.lower())
+                if validate != "ok":
+                    print(validate)
+                else:
+                    Global.user_text(self, awake_time)
+
+                    ai_brain3 = "Được rồi, tôi sẽ đánh thức ngài vào lúc " + awake_time
+
+                    Global.machine_text(self, ai_brain3)
+                    tts = gTTS(ai_brain3, lang="vi")
+                    tts.save("hi.mp3")
+                    playsound("hi.mp3")
+                    os.remove("hi.mp3")
+                    break
+
+            alarm_hour = awake_time[0:2]
+            alarm_min = awake_time[3:5]
+            alarm_sec = awake_time[6:8]
+            alarm_period = awake_time[9:].upper()
+
+            while True:
+                now = datetime.now()
+
+                current_hour = now.strftime("%I")
+                current_min = now.strftime("%M")
+                current_sec = now.strftime("%S")
+                current_period = now.strftime("%p")
+
+                if alarm_period == current_period:
+                    if alarm_hour == current_hour:
+                        if alarm_min == current_min:
+                            if alarm_sec == current_sec:
+                                ai_brain = "Tới giờ làm việc rồi thưa ngài!"
+                                break
+
         # SEARCHING INFORMATION:
         elif "tìm kiếm" in me or "thông tin" in me:
             with sr.Microphone() as mic:  # Use micro in system

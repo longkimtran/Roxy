@@ -61,21 +61,19 @@ class MainWindow:
 
             except:
                 me = ""
+                Global.user_text(self, me)
 
-            if "hey" in me or "Roxy" in me or ("hey" in me and "roxy" in me) or "roxy" in me:
+            if "hey" in me or "Roxy" in me or ("hey" in me and "roxy" in me) or "roxy" in me or "wake up" in me:
                 hour = int(datetime.datetime.now().hour)
                 if 8 <= hour <= 12:
                     ai_brain2 = "Good morning sir. I'm Roxy your virtual assistance. Please choose your language for " \
-                                "you, " \
-                                "sir! "
+                                "you, sir! "
                 elif 12 < hour < 18:
-                    ai_brain2 = "Good afternoon sir. I'm Roxy your virtual assistance. Please choose your language for " \
-                                "you, " \
-                                "sir! "
+                    ai_brain2 = "Good afternoon sir. I'm Roxy your virtual assistance. Please choose your language for "\
+                                "you, sir! "
                 else:
                     ai_brain2 = "Good evening sir. I'm Roxy your virtual assistance. Please choose your language for " \
-                                "you, " \
-                                "sir! "
+                                "you, sir! "
 
                 voice = ai_mouth.getProperty('voices')
                 ai_mouth.setProperty('voice', voice[1].id)  # voice AI: 0(Male), 1(Female)

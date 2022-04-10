@@ -1,8 +1,6 @@
 # Some libraries use in AV
 import datetime
 import sys
-import threading
-import time
 import warnings
 
 import pyttsx3
@@ -21,7 +19,6 @@ ai_mouth = pyttsx3.init()
 
 warnings.filterwarnings("ignore")
 running = True
-
 
 """def blink(self):
     def run():
@@ -54,57 +51,72 @@ class MainWindow:
             self.uic.Start_Pause_Button.setText('Start')
 
     def Roxy_AI(self):
-        hour = int(datetime.datetime.now().hour)
-        if 8 <= hour <= 12:
-            ai_brain2 = "Good morning sir. I'm Roxy your virtual assistance. Please choose your language for you, " \
-                        "sir! "
-        elif 12 < hour < 18:
-            ai_brain2 = "Good afternoon sir. I'm Roxy your virtual assistance. Please choose your language for " \
-                        "you, " \
-                        "sir! "
-        else:
-            ai_brain2 = "Good evening sir. I'm Roxy your virtual assistance. Please choose your language for you, " \
-                        "sir! "
-
-        voice = ai_mouth.getProperty('voices')
-        ai_mouth.setProperty('voice', voice[1].id)  # voice AI: 0(Male), 1(Female)
-        Global.machine_text(self, ai_brain2)
-        ai_mouth.say(ai_brain2)
-        ai_mouth.runAndWait()
-
-        while running:
+        while True:
             with sr.Microphone() as mic:  # Use micro in system
-                Global.machine_text(self, Global.MACHINE_WAITING_2)
                 audio = ai_hear.listen(mic, timeout=6,
                                        phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-
             try:
                 me = ai_hear.recognize_google(audio)
                 Global.user_text(self, me)
 
             except:
-                me = "I cannot recognize your voice."
-                Global.machine_text(self, me)
+                me = ""
 
-            if "English" in me:
-                Roxie1(self)
-                break
+            if "hey" in me or "Roxy" in me or ("hey" in me and "roxy" in me) or "roxy" in me:
+                hour = int(datetime.datetime.now().hour)
+                if 8 <= hour <= 12:
+                    ai_brain2 = "Good morning sir. I'm Roxy your virtual assistance. Please choose your language for " \
+                                "you, " \
+                                "sir! "
+                elif 12 < hour < 18:
+                    ai_brain2 = "Good afternoon sir. I'm Roxy your virtual assistance. Please choose your language for " \
+                                "you, " \
+                                "sir! "
+                else:
+                    ai_brain2 = "Good evening sir. I'm Roxy your virtual assistance. Please choose your language for " \
+                                "you, " \
+                                "sir! "
 
-            if "Vietnamese" in me:
-                Roxie2(self)
-                break
+                voice = ai_mouth.getProperty('voices')
+                ai_mouth.setProperty('voice', voice[1].id)  # voice AI: 0(Male), 1(Female)
+                Global.machine_text(self, ai_brain2)
+                ai_mouth.say(ai_brain2)
+                ai_mouth.runAndWait()
 
-            ai_brain = "You not choose or something. Try again!"
+                while running:
+                    with sr.Microphone() as mic:  # Use micro in system
+                        Global.machine_text(self, Global.MACHINE_WAITING_2)
+                        audio = ai_hear.listen(mic, timeout=6,
+                                               phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-            voices = ai_mouth.getProperty('voices')
-            ai_mouth.setProperty('voice', voices[1].id)  # voice AI: 0(Male), 1(Female)
+                    try:
+                        me = ai_hear.recognize_google(audio)
+                        Global.user_text(self, me)
 
-            Global.machine_text(self, ai_brain)
+                    except:
+                        me = "I cannot recognize your voice."
+                        Global.machine_text(self, me)
 
-            ai_mouth.say(ai_brain)
-            ai_mouth.runAndWait()
+                    if "English" in me:
+                        Roxie1(self)
+                        break
 
-            QtCore.QCoreApplication.processEvents()
+                    if "Vietnamese" in me:
+                        Roxie2(self)
+                        break
+
+                    ai_brain = "You not choose or something. Try again!"
+
+                    voices = ai_mouth.getProperty('voices')
+                    ai_mouth.setProperty('voice', voices[1].id)  # voice AI: 0(Male), 1(Female)
+
+                    Global.machine_text(self, ai_brain)
+
+                    ai_mouth.say(ai_brain)
+                    ai_mouth.runAndWait()
+
+                    QtCore.QCoreApplication.processEvents()
+            break
 
     def show(self):
         self.main_win.show()

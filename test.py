@@ -311,5 +311,6 @@ while True:
         if alarm_hour == current_hour:
             if alarm_min == current_min:
                 if alarm_sec == current_sec:
-                    print("Wake Up!")
+                    playsound("High-Sound-9000hz.mp3")
                     break"""
+

@@ -305,7 +305,8 @@ def Roxie2(self):
                     if alarm_hour == current_hour:
                         if alarm_min == current_min:
                             if alarm_sec == current_sec:
-                                ai_brain = "Tới giờ làm việc rồi thưa ngài!"
+                                ai_brain = "Tới giờ làm việc rồi thưa ngài!, Tới giờ làm việc rồi thưa ngài!, Tới giờ "\
+                                           "làm việc rồi thưa ngài!, Tới giờ làm việc rồi thưa ngài! "
                                 break
 
         # SEARCHING INFORMATION:

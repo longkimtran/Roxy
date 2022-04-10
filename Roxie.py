@@ -222,57 +222,49 @@ def Roxie1(self):
                         ai_brain = "Today is " + curr_date + ", " + str(food_sunday)
 
                 elif "BMI" in me or "weight" in me:
-                    """weight_num = []
-                    height_num = []
-                    with sr.Microphone() as mic:  # Use micro in system
+                    """with sr.Microphone() as mic:  # Use micro in system
                         Global.machine_text(self, Global.MACHINE_HEALTH_CARE_BMI_WEIGHT)
                         audio = ai_hear_1.listen(mic, timeout=6,
                                                  phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-
                     try:
                         weight = ai_hear_1.recognize_google(audio)
                         Global.user_text(self, weight)
+
                     except:
                         weight = "Something wrong here!"
                         Global.user_text(self, weight)
-
-                    weight_num.append(float(weight))
 
                     with sr.Microphone() as mic:  # Use micro in system
                         Global.machine_text(self, Global.MACHINE_HEALTH_CARE_BMI_HEIGHT)
                         audio = ai_hear_1.listen(mic, timeout=6,
                                                  phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-
                     try:
                         height = ai_hear_1.recognize_google(audio)
                         Global.user_text(self, height)
+
                     except:
                         height = "Something wrong here!"
-                        Global.user_text(self, height)
+                        Global.user_text(self, height)"""
 
-                    height_num.append(float(height))"""
+                    weight = float(input("Enter your weight: "))
+                    Global.user_text(self, weight + "kg")
+                    height = float(input("Enter your height: "))
+                    Global.user_text(self, height + "meter")
 
-                    weight = float(input("Enter your weight(kg):  "))
-                    height = float(input("Enter your height(meter): "))
+                    Global.machine_text(self, "Calculating....")
 
-                    print("Roxy: Calculating...!")
-
-                    bmi = weight / (height ** 2)
+                    bmi = float(weight) / float((height ** 2))
 
                     if bmi <= 18.5:
                         ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You underweight, sir! " + str(wei1)
-
                     elif 18.5 < bmi < 24.9:
                         ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". " + str(wei2)
-
                     elif 25 <= bmi < 34.9:
                         ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You overweight, sir! " + str(wei3) + \
                                    str(random.choice(activity1))
-
                     elif bmi >= 35:
                         ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You obese, sir! " + str(wei3) + \
                                    str(random.choice(activity1))
-
                 else:
                     ai_brain = "You should follow the instructions of this menu to stay healthy, sir!"
 
@@ -330,7 +322,8 @@ def Roxie1(self):
                         if alarm_hour == current_hour:
                             if alarm_min == current_min:
                                 if alarm_sec == current_sec:
-                                    ai_brain = "Time to wake-up sir!"
+                                    ai_brain = "Time to wake-up sir!, Time to wake-up sir!, Time to wake-up sir!, " \
+                                               "Time to wake-up sir!, Time to wake-up sir!, Time to wake-up sir! "
                                     break
 
             # SEARCHING INFORMATION:

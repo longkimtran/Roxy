@@ -24,7 +24,7 @@ def Roxie1(self):
     ai_hear_1 = sr.Recognizer()
     ai_mouth = pyttsx3.init()
 
-    while True:
+    while Global.IS_RUNNING:
         with sr.Microphone() as mic:  # Use micro in system
             Global.machine_text(self, Global.MACHINE_WAITING_1)
             audio = ai_hear.listen(mic, timeout=6,
@@ -65,7 +65,7 @@ def Roxie1(self):
             # DAY IN CURRENT:
             elif "day" in me:
                 today = date.today()  # use current date real life
-                ai_brain = today.strftime("%B %d, %Y")
+                ai_brain = today.strftime("It %A, " + "%B %d, %Y")
 
             # TIME IN CURRENT:
             elif "time" in me:
@@ -87,23 +87,32 @@ def Roxie1(self):
 
             # ALTER BRIGHTNESS ON SCREEN:
             elif "brightness" in me:
-                with sr.Microphone() as mic:  # Use micro in system
-                    Global.machine_text(self, Global.MACHINE_CONTROL_BRIGHTNESS)
-                    audio = ai_hear.listen(mic, timeout=6,
-                                           phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+                while True:
+                    while True:
+                        with sr.Microphone() as mic:  # Use micro in system
+                            Global.machine_text(self, Global.MACHINE_CONTROL_BRIGHTNESS)
+                            audio = ai_hear.listen(mic, timeout=6,
+                                                   phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
-                try:
-                    me = ai_hear.recognize_google(audio)
-                    Global.user_text(self, me)
+                        try:
+                            me = ai_hear.recognize_google(audio)
+                            Global.user_text(self, me)
 
-                except:
-                    me = "Something wrong here!"
-                    Global.machine_text(self, me)
+                            break
 
-                c = wmi.WMI(namespace='wmi')
-                methods = c.WmiMonitorBrightnessMethods()[0]
-                ai_brain = "Ok, Brightness is adjusted at " + me + "% !"
-                methods.WmiSetBrightness(me, 0)
+                        except:
+                            me = "Something wrong here!"
+                            Global.machine_text(self, me)
+                    try:
+                        c = wmi.WMI(namespace='wmi')
+                        methods = c.WmiMonitorBrightnessMethods()[0]
+                        ai_brain = "Ok, Brightness is adjusted at " + me + "% !"
+                        methods.WmiSetBrightness(me, 0)
+
+                        break
+                    except:
+                        me = "Incorrect syntax!!!!"
+                        Global.machine_text(self, me)
 
             elif "temperature" in me:
                 with sr.Microphone() as mic:  # Use micro in system
@@ -222,49 +231,64 @@ def Roxie1(self):
                         ai_brain = "Today is " + curr_date + ", " + str(food_sunday)
 
                 elif "BMI" in me or "weight" in me:
-                    """with sr.Microphone() as mic:  # Use micro in system
-                        Global.machine_text(self, Global.MACHINE_HEALTH_CARE_BMI_WEIGHT)
-                        audio = ai_hear_1.listen(mic, timeout=6,
-                                                 phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-                    try:
-                        weight = ai_hear_1.recognize_google(audio)
-                        Global.user_text(self, weight)
+                    while True:
+                        while True:
+                            try:
+                                with sr.Microphone() as mic:  # Use micro in system
+                                    Global.machine_text(self, Global.MACHINE_HEALTH_CARE_BMI_WEIGHT)
+                                    audio = ai_hear_1.listen(mic, timeout=6, phrase_time_limit=3)  # let the computer listen
+                                    # for exactly 3 seconds
 
-                    except:
-                        weight = "Something wrong here!"
-                        Global.user_text(self, weight)
+                                weight = ai_hear_1.recognize_google(audio)
 
-                    with sr.Microphone() as mic:  # Use micro in system
-                        Global.machine_text(self, Global.MACHINE_HEALTH_CARE_BMI_HEIGHT)
-                        audio = ai_hear_1.listen(mic, timeout=6,
-                                                 phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-                    try:
-                        height = ai_hear_1.recognize_google(audio)
-                        Global.user_text(self, height)
+                                Global.machine_text(self, weight + " kg")
+                                Global.user_text(self, weight + " kg")
 
-                    except:
-                        height = "Something wrong here!"
-                        Global.user_text(self, height)"""
+                                with sr.Microphone() as mic:  # Use micro in system
+                                    Global.machine_text(self, Global.MACHINE_HEALTH_CARE_BMI_HEIGHT)
+                                    audio = ai_hear_1.listen(mic, timeout=6, phrase_time_limit=3)  # let the computer listen
+                                    # for exactly 3 seconds
 
-                    weight = float(input("Enter your weight: "))
-                    Global.user_text(self, weight + "kg")
-                    height = float(input("Enter your height: "))
-                    Global.user_text(self, height + "meter")
+                                height = ai_hear_1.recognize_google(audio)
 
-                    Global.machine_text(self, "Calculating....")
+                                Global.user_text(self, height + " meter")
+                                Global.machine_text(self, height + " meter")
 
-                    bmi = float(weight) / float((height ** 2))
+                                break
 
-                    if bmi <= 18.5:
-                        ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You underweight, sir! " + str(wei1)
-                    elif 18.5 < bmi < 24.9:
-                        ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". " + str(wei2)
-                    elif 25 <= bmi < 34.9:
-                        ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You overweight, sir! " + str(wei3) + \
-                                   str(random.choice(activity1))
-                    elif bmi >= 35:
-                        ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You obese, sir! " + str(wei3) + \
-                                   str(random.choice(activity1))
+                            except:
+                                weight = "Something wrong here!"
+                                Global.user_text(self, weight)
+
+                                # height = "Something wrong here!"
+                                # Global.user_text(self, height)
+
+
+                        try:
+                            Global.machine_text(self, "Calculating....")
+
+                            bmi = float(weight) / (float(height) ** 2)
+
+                            if bmi <= 18.5:
+                                ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You underweight, sir! " + str(wei1)
+
+                            elif 18.5 < bmi < 24.9:
+                                ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". " + str(wei2)
+                            elif 25 <= bmi < 34.9:
+                                ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You overweight, sir! " + str(wei3) + \
+                                           str(random.choice(activity1))
+                            elif bmi >= 35:
+                                ai_brain = "Your BMI is " + str(round(bmi, 2)) + ". You obese, sir! " + str(wei3) + \
+                                           str(random.choice(activity1))
+
+                            break
+
+
+                        except:
+                            msg = "You misspell your weight or height."
+                            Global.user_text(self, msg)
+                            Global.machine_text(self, msg)
+
                 else:
                     ai_brain = "You should follow the instructions of this menu to stay healthy, sir!"
 

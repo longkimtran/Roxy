@@ -25,7 +25,7 @@ def Roxie2(self):
     ai_hear = sr.Recognizer()
     ai_hear_1 = sr.Recognizer()
 
-    while True:
+    while Global.IS_RUNNING:
         with sr.Microphone() as mic:  # Use micro in system
             Global.machine_text(self, Global.MACHINE_WAITING_VN)
             audio = ai_hear.listen(mic, timeout=6,
@@ -66,7 +66,7 @@ def Roxie2(self):
         # DAY IN CURRENT:
         elif "ngày" in me:
             today = date.today()  # use current date real life
-            ai_brain = today.strftime("%d/%m/%Y")
+            ai_brain = today.strftime("Hôm nay là %A, " + "%d/%m/%Y")
 
         # TIME IN CURRENT:
         elif "giờ" in me:
@@ -88,21 +88,32 @@ def Roxie2(self):
 
         # ALTER BRIGHTNESS ON SCREEN:
         elif ("điều chỉnh" in me and "độ sáng" in me) or "màn hình" in me or "độ sáng" in me:
-            with sr.Microphone() as mic:  # Use micro in system
-                Global.machine_text(self, Global.MACHINE_CONTROL_BRIGHTNESS_VN)
-                audio = ai_hear.listen(mic, timeout=6,
-                                       phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
-            try:
-                me = ai_hear.recognize_google(audio, language="vi-VN")
-                Global.user_text(self, me)
-            except:
-                me = "Có gì đó không đúng!"
-                Global.machine_text(self, me)
+            while True:
+                while True:
+                    with sr.Microphone() as mic:  # Use micro in system
+                        Global.machine_text(self, Global.MACHINE_CONTROL_BRIGHTNESS_VN)
+                        audio = ai_hear.listen(mic, timeout=6,
+                                               phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
+                    try:
+                        me = ai_hear.recognize_google(audio, language="vi-VN")
+                        Global.user_text(self, me)
 
-            c = wmi.WMI(namespace='wmi')
-            methods = c.WmiMonitorBrightnessMethods()[0]
-            ai_brain = "Độ sáng đươc điều chỉnh ở mức " + me + "% !"
-            methods.WmiSetBrightness(me, 0)
+                        break
+
+                    except:
+                        me = "Có gì đó không đúng!"
+                        Global.machine_text(self, me)
+
+                try:
+                    c = wmi.WMI(namespace='wmi')
+                    methods = c.WmiMonitorBrightnessMethods()[0]
+                    ai_brain = "Độ sáng đươc điều chỉnh ở mức " + me + "% !"
+                    methods.WmiSetBrightness(me, 0)
+
+                    break
+                except:
+                    me = "Không đúng cú pháp !!!!"
+                    Global.machine_text(self, me)
 
         # TEMPERATURE:
         elif "nhiệt độ" in me:
@@ -224,29 +235,63 @@ def Roxie2(self):
                     ai_brain = str(food_sunday_vn)
 
             elif "cân nặng" in me:
-                print("Xin ngài hãy nhập cân nặng và chiều cao!")
-                weight = float(input("Cân nặng(kg):  "))
-                height = float(input("Chiều Cao(meter): "))
+                while True:
+                    while True:
+                        try:
+                            with sr.Microphone() as mic:  # Use micro in system
+                                Global.machine_text(self, Global.MACHINE_HEALTH_CARE_BMI_WEIGHT)
+                                audio = ai_hear_1.listen(mic, timeout=6, phrase_time_limit=3)  # let the computer listen
+                                # for exactly 3 seconds
 
-                print("Roxy: Đang tính toán...!")
+                            weight = ai_hear_1.recognize_google(audio, language="vi-VN")
 
-                bmi = weight / (height ** 2)
+                            Global.machine_text(self, weight + " kg")
+                            Global.user_text(self, weight + " kg")
 
-                if bmi <= 18.5:
-                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài đang suy dinh dưỡng đấy! " + \
-                               str(wei1_vn)
+                            with sr.Microphone() as mic:  # Use micro in system
+                                Global.machine_text(self, Global.MACHINE_HEALTH_CARE_BMI_HEIGHT)
+                                audio = ai_hear_1.listen(mic, timeout=6, phrase_time_limit=3)  # let the computer listen
+                                # for exactly 3 seconds
 
-                elif 18.5 < bmi <= 24.9:
-                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". " + str(wei2_vn)
+                            height = ai_hear_1.recognize_google(audio, language="vi-VN")
 
-                elif 25 < bmi <= 34.9:
-                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài hơi thừa cân đấy! " + \
-                               str(wei3_vn) + str(random.choice(activity2))
+                            Global.user_text(self, height + " meter")
+                            Global.machine_text(self, height + " meter")
 
-                elif bmi > 35:
-                    ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài bị béo phì rồi nên giảm cân " \
-                                                                                "thôi! " + str(wei3_vn) + \
-                               str(random.choice(activity2))
+                            break
+
+                        except:
+                            weight = "Có gì đó không đúng"
+                            Global.user_text(self, weight)
+
+                    try:
+                        Global.machine_text(self, "Đang tính toán...!")
+
+                        bmi = float(weight) / (float(height) ** 2)
+
+                        if bmi <= 18.5:
+                            ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài đang suy dinh dưỡng " \
+                                                                                        "đấy! " + \
+                                       str(wei1_vn)
+
+                        elif 18.5 < bmi <= 24.9:
+                            ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". " + str(wei2_vn)
+
+                        elif 25 < bmi <= 34.9:
+                            ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài hơi thừa cân đấy! " + \
+                                       str(wei3_vn) + str(random.choice(activity2))
+
+                        elif bmi > 35:
+                            ai_brain = "Chỉ số BMI của ngài là " + str(round(bmi, 2)) + ". Ngài bị béo phì rồi nên " \
+                                                                                        "giảm cân " \
+                                                                                        "thôi! " + str(wei3_vn) + \
+                                       str(random.choice(activity2))
+
+                        break
+                    except:
+                        msg = "Ngài nhập không đúng cân nặng và chiều cao. Thử lại!"
+                        Global.user_text(self, msg)
+                        Global.machine_text(self, msg)
 
             else:
                 ai_brain = "Ngài nên theo chỉ dẫn của thực đơn này để giữ cho sức khỏe được khỏe mạnh!"
@@ -305,7 +350,7 @@ def Roxie2(self):
                     if alarm_hour == current_hour:
                         if alarm_min == current_min:
                             if alarm_sec == current_sec:
-                                ai_brain = "Tới giờ làm việc rồi thưa ngài!, Tới giờ làm việc rồi thưa ngài!, Tới giờ "\
+                                ai_brain = "Tới giờ làm việc rồi thưa ngài!, Tới giờ làm việc rồi thưa ngài!, Tới giờ " \
                                            "làm việc rồi thưa ngài!, Tới giờ làm việc rồi thưa ngài! "
                                 break
 
@@ -317,7 +362,7 @@ def Roxie2(self):
                                          phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
 
             try:
-                info = ai_hear_1.recognize_google(audio)
+                info = ai_hear_1.recognize_google(audio, language="vi-VN")
                 Global.user_text(self, info)
             except:
                 info = "Hình như có gì đó không đúng!"

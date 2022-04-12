@@ -18,7 +18,6 @@ ai_hear_1 = sr.Recognizer()
 ai_mouth = pyttsx3.init()
 
 warnings.filterwarnings("ignore")
-running = True
 
 """def blink(self):
     def run():
@@ -42,16 +41,17 @@ class MainWindow:
         self.uic.Quit_Button.clicked.connect(self.main_win.close)
 
     def button_start_stop(self):
-        global running
-        if running:
-            self.uic.Start_Pause_Button.setText('Stop')
-            self.Roxy_AI()
+        if Global.IS_RUNNING:
+            Global.IS_RUNNING = False
             self.uic.Start_Pause_Button.setText('Start')
         else:
-            self.uic.Start_Pause_Button.setText('Start')
+            Global.IS_RUNNING = True
+            self.uic.Start_Pause_Button.setText('Stop')
+
+            self.Roxy_AI()
 
     def Roxy_AI(self):
-        while True:
+        while Global.IS_RUNNING:
             with sr.Microphone() as mic:  # Use micro in system
                 audio = ai_hear.listen(mic, timeout=6,
                                        phrase_time_limit=3)  # let the computer listen for exactly 3 seconds
@@ -61,9 +61,9 @@ class MainWindow:
 
             except:
                 me = ""
-                Global.user_text(self, me)
+                print("You: ", me)
 
-            if "hey" in me or "Roxy" in me or ("hey" in me and "roxy" in me) or "roxy" in me or "wake up" in me:
+            if "Roxy" in me or ("hey" in me and "Roxy" in me) or "roxy" in me or "wake up" in me:
                 hour = int(datetime.datetime.now().hour)
                 if 8 <= hour <= 12:
                     ai_brain2 = "Good morning sir. I'm Roxy your virtual assistance. Please choose your language for " \
@@ -81,7 +81,7 @@ class MainWindow:
                 ai_mouth.say(ai_brain2)
                 ai_mouth.runAndWait()
 
-                while running:
+                while True:
                     with sr.Microphone() as mic:  # Use micro in system
                         Global.machine_text(self, Global.MACHINE_WAITING_2)
                         audio = ai_hear.listen(mic, timeout=6,
@@ -114,7 +114,7 @@ class MainWindow:
                     ai_mouth.runAndWait()
 
                     QtCore.QCoreApplication.processEvents()
-            break
+            # break
 
     def show(self):
         self.main_win.show()

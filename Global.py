@@ -26,6 +26,8 @@ MACHINE_HEALTH_CARE_BMI_VN = "Xin vui lòng làm theo từng bước!"
 MACHINE_HEALTH_CARE_BMI_WEIGHT_VN = "Vui lòng nhập số cân nặng của ngài(kg)"
 MACHINE_HEALTH_CARE_BMI_HEIGHT_VN = "Vui lòng nhập chiều cao của ngài(kg)"
 
+IS_RUNNING = False
+
 
 def machine_text(self, text):
     print("Roxy: " + text)

@@ -114,7 +114,10 @@ class MainWindow:
                     ai_mouth.runAndWait()
 
                     QtCore.QCoreApplication.processEvents()
-            # break
+
+            elif "stop" in me and "listen" in me:
+                self.uic.Start_Pause_Button.setText('Start')
+                break
 
     def show(self):
         self.main_win.show()

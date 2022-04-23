@@ -37,6 +37,3 @@ intro = "Hello, my name is Roxy, and I work as a virtual assistant. " \
 intro_vn = "Xin chào, tôi là Roxy một trợ lý ảo. " \
            "Tôi được tạo bởi Kim Long, một sinh viên ngành Công nghệ thông tin trường đại học Greenwich vào năm 2021. " \
            "Tôi được tạo ra với mục đích phục  vụ mục đích cá nhân của con người. Rất vinh hạnh được làm quen với ngài!"
-
-# List:
-name = []

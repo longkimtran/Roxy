@@ -260,10 +260,6 @@ def Roxie1(self):
                                 weight = "Something wrong here!"
                                 Global.user_text(self, weight)
 
-                                # height = "Something wrong here!"
-                                # Global.user_text(self, height)
-
-
                         try:
                             Global.machine_text(self, "Calculating....")
 

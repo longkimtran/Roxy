@@ -19,16 +19,6 @@ ai_mouth = pyttsx3.init()
 
 warnings.filterwarnings("ignore")
 
-"""def blink(self):
-    def run():
-        while running:
-            time.sleep(0.5)
-            if not running:
-                break
-
-    thread = threading.Thread(target=run)
-    thread.start()"""
-
 
 class MainWindow:
     ai_brain = ""

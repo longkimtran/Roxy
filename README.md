@@ -8,23 +8,7 @@ You can use your voice to interact with Roxy.
 Roxy will rely your information base on the thing you talk.
 
 Note: When you use this app make use you have some 
-library in there first if not install them like this:
-
-	+ pip install playsound==1.2.2
-	+ pip install pyttsx3==2.71
-	+ pip install wikipedia
-	+ pip install speechrecognition
-	+ pip install pipwin
-	+ pip install pyaudio
-	+ pip install pywin32
-	+ pip install datetime
-	+ pip install webbrowser
-    + pip install BeautifulSoup
-    + pip install gtts 
-    + pip install playsound
-    + pip install screen-brightness-control
-    + pip insatll pyautogui
-
+library in there first if not install them like this: pip install -m requierments.txt
 
 + For user: 
 I create 1 EXE file in 'dist folder' so you can open and use it if you don't 

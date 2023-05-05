@@ -8,7 +8,9 @@ You can use your voice to interact with Roxy.
 Roxy will rely your information base on the thing you talk.
 
 Note: When you use this app make use you have some 
-library in there first if not install them like this: pip install -m requierments.txt
+library in there first if not install them like this: 
+
+"pip install -m requierments.txt"
 
 + For user: 
 I create 1 EXE file in 'dist folder' so you can open and use it if you don't 
